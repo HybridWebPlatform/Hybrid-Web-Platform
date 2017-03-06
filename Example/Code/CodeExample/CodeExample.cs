@@ -7,11 +7,11 @@ namespace CodeExample
 {
 	public class App : Application
 	{
-		HybridWebView webView;
+		HybridWebPlatform<JavascriptFunctionsProvider> webView;
 
 		public App()
 		{
-			webView = new HybridWebView();
+			webView = new HybridWebPlatform<JavascriptFunctionsProvider>();
 			// The root page of your application
 			var content = new ContentPage
 			{
@@ -36,5 +36,17 @@ namespace CodeExample
 		{
 			// Handle when your app resumes
 		}
+	}
+
+	class JavascriptFunctionsProvider
+	{
+		[JsFunctionCallback("test1")]
+		public event Func<string> DoStuffB;
+
+		[JsFunctionCallAttribute("test2")]
+		public Action<string> CallingExistingJsFunction;
+
+		[JsFunctionInjectAttribute("test3", "alert(param1);")]
+		public Action<string> InjectJsFunction;
 	}
 }
