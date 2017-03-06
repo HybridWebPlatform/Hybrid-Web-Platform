@@ -84,7 +84,6 @@
     <Folder Include="ControlRenderers\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MyClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ControlRenderers\HybridWebView\HybridWebViewRenderer.cs" />
     <Compile Include="ControlRenderers\HybridWebView\WebPlatformNavigationDelegate.cs" />
