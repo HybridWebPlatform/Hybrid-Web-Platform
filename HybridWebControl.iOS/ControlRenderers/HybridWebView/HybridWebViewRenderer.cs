@@ -25,17 +25,10 @@ namespace HybridWebControl.iOS
 		public event Action<Uri, string, int> PageLoadError;
 		public event Action<string> JavascriptExecuted;
 
-		//private UISwipeGestureRecognizer _leftSwipeGestureRecognizer;
-		//private UISwipeGestureRecognizer _rightSwipeGestureRecognizer;
 		private WKUserContentController userController;
-		private WebPlatformNavigationDelegate navigationDelegate;
-
-		private static object syncContext = new object();
 
 		private const string NativeFuncCall = "window.webkit.messageHandlers.native.postMessage";
 		private const string NativeFunction = "function Native(action, data){window.webkit.messageHandlers.native.postMessage(JSON.stringify({ a: action, d: data }));}";
-		private const string FuncFormat = "^(file|http|https)://(local|LOCAL)/Func(=|%3D)(?<CallbackIdx>[\\d]+)(&|%26)(?<FuncName>[\\w]+)/";
-		private static readonly Regex FuncExpression = new Regex(FuncFormat);
 
 		public bool CanGoBack
 		{
@@ -58,24 +51,6 @@ namespace HybridWebControl.iOS
 			get
 			{
 				return this.Control.Url.AbsoluteString;
-			}
-		}
-
-		private WebPlatformNavigationDelegate WebNavigationDelegate
-		{
-			get
-			{
-				if (navigationDelegate == null)
-				{
-					navigationDelegate = new WebPlatformNavigationDelegate();
-
-					navigationDelegate.ReceivedError += NavigationDelegate_ReceivedError;
-					navigationDelegate.FinishedLoadingUrl += NavigationDelegate_FinishedLoadingUrl;
-					navigationDelegate.StartLoadingUrl += NavigationDelegate_StartLoadingUrl;
-					navigationDelegate.ShouldStartPageLoading += NavigationDelegate_ShouldStartPageLoading;
-				}
-
-				return navigationDelegate;
 			}
 		}
 
@@ -139,28 +114,9 @@ namespace HybridWebControl.iOS
 
 				userController.AddScriptMessageHandler(this, "native");
 
-				var webView = new WKWebView(Frame, config) { NavigationDelegate = WebNavigationDelegate };
+				var webView = new WKWebView(Frame, config) { NavigationDelegate = CreateNavidationalDelagate() };
 
 				SetNativeControl(webView);
-
-				//_leftSwipeGestureRecognizer = new UISwipeGestureRecognizer(() => Element.OnLeftSwipe(this, EventArgs.Empty))
-				//{
-				//	Direction = UISwipeGestureRecognizerDirection.Left
-				//};
-
-				//_rightSwipeGestureRecognizer = new UISwipeGestureRecognizer(() => Element.OnRightSwipe(this, EventArgs.Empty))
-				//{
-				//	Direction = UISwipeGestureRecognizerDirection.Right
-				//};
-
-				//webView.AddGestureRecognizer(_leftSwipeGestureRecognizer);
-				//webView.AddGestureRecognizer(_rightSwipeGestureRecognizer);
-			}
-
-			if (e.NewElement == null && Control != null)
-			{
-				//Control.RemoveGestureRecognizer(_leftSwipeGestureRecognizer);
-				//Control.RemoveGestureRecognizer(_rightSwipeGestureRecognizer);
 			}
 
 			e.NewElement.SetWebActionSource(this);
@@ -179,6 +135,18 @@ namespace HybridWebControl.iOS
 					}
 				}));
 			}
+		}
+
+		private WebPlatformNavigationDelegate CreateNavidationalDelagate()
+		{
+			var navigationDelegate = new WebPlatformNavigationDelegate();
+
+			navigationDelegate.ReceivedError += NavigationDelegate_ReceivedError;
+			navigationDelegate.FinishedLoadingUrl += NavigationDelegate_FinishedLoadingUrl;
+			navigationDelegate.StartLoadingUrl += NavigationDelegate_StartLoadingUrl;
+			navigationDelegate.ShouldStartPageLoading += NavigationDelegate_ShouldStartPageLoading;
+
+			return navigationDelegate;
 		}
 
 		private void NavigationDelegate_ReceivedError(string arg1, string arg2, int arg3)

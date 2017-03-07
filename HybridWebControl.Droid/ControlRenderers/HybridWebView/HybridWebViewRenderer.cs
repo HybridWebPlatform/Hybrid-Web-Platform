@@ -32,12 +32,8 @@ namespace HybridWebControl.Droid
 		public event Action<Uri, string, int> PageLoadError;
 		public event Action<string> JavascriptExecuted;
 
-		private WebPlatformViewClient webClient;
-		private WebPlatformJavascriptCallback javascriptCallback;
-
 		private const string NativeFuncCall = "Xamarin.call";
 		private const string NativeFunction = "function Native(action, data){Xamarin.call(JSON.stringify({ a: action, d: data }));}";
-		private const string FuncFormat = "^(file|http|https)://(local|LOCAL)/Func(=|%3D)(?<CallbackIdx>[\\d]+)(&|%26)(?<FuncName>[\\w]+)/";
 
 		public bool CanGoBack
 		{
@@ -63,45 +59,36 @@ namespace HybridWebControl.Droid
 			}
 		}
 
+		public void GoBack()
+		{
+			this.Control.GoBack();
+		}
+
+		public void GoForward()
+		{
+			this.Control.GoForward();
+		}
+
+		public void RefreshPage()
+		{
+			this.Control.Reload();
+		}
+
+		public void LoadPage(Uri page)
+		{
+			this.Control.LoadUrl(page.AbsoluteUri);
+		}
+
+		public void ExecuteJavascript(string javascript)
+		{
+			Inject(javascript);
+		}
+
 		public override SizeRequest GetDesiredSize(int widthConstraint, int heightConstraint)
 		{
 			var sizeRequest = base.GetDesiredSize(widthConstraint, heightConstraint);
 			sizeRequest.Request = new Size(sizeRequest.Request.Width, 0);
 			return sizeRequest;
-		}
-
-		private WebPlatformViewClient WebViewClient
-		{
-			get
-			{
-				if (webClient == null)
-				{
-					var creationDelegate = GetWebViewClientDelegate;
-
-					webClient = creationDelegate != null ? creationDelegate(this) : new WebPlatformViewClient();
-
-					webClient.ReceivedError += WebClient_ReceivedError;
-					webClient.FinishedLoadingUrl += WebClient_FinishedLoadingUrl;
-					webClient.StartLoadingUrl += WebClient_StartLoadingUrl;
-					webClient.ShouldStartPageLoading += WebClient_ShouldStartPageLoading;
-				}
-
-				return webClient;
-			}
-		}
-
-		private WebPlatformJavascriptCallback JavascriptCallback
-		{
-			get
-			{
-				if (javascriptCallback == null)
-				{
-					javascriptCallback = new WebPlatformJavascriptCallback();
-					javascriptCallback.ReceivedCallback += JavascriptExecuted;
-				}
-
-				return javascriptCallback;
-			}
 		}
 
 		protected virtual WebPlatformChromeClient GetWebChromeClient()
@@ -124,7 +111,7 @@ namespace HybridWebControl.Droid
 				webView.SetLayerType(EnableHardwareRendering ? LayerType.Hardware : LayerType.Software, null);
 				webView.SetBackgroundColor(Color.Transparent.ToAndroid());
 
-				webView.SetWebViewClient(this.WebViewClient);
+				webView.SetWebViewClient(this.CreateWebClient());
 				webView.SetWebChromeClient(this.GetWebChromeClient());
 
 				webView.Settings.JavaScriptEnabled = true;
@@ -162,29 +149,27 @@ namespace HybridWebControl.Droid
 			base.Dispose(disposing);
 		}
 
-		public void GoBack()
+		private void Inject(string script)
 		{
-			this.Control.GoBack();
+			if (Control != null)
+			{
+				this.Control.LoadUrl(string.Format("javascript: {0}", script));
+			}
 		}
 
-		public void GoForward()
+		private WebPlatformViewClient CreateWebClient()
 		{
-			this.Control.GoForward();
-		}
 
-		public void RefreshPage()
-		{
-			this.Control.Reload();
-		}
+			var creationDelegate = GetWebViewClientDelegate;
 
-		public void LoadPage(Uri page)
-		{
-			this.Control.LoadUrl(page.AbsoluteUri);
-		}
+			var webClient = creationDelegate != null ? creationDelegate(this) : new WebPlatformViewClient();
 
-		public void ExecuteJavascript(string javascript)
-		{
-			Inject(javascript);
+			webClient.ReceivedError += WebClient_ReceivedError;
+			webClient.FinishedLoadingUrl += WebClient_FinishedLoadingUrl;
+			webClient.StartLoadingUrl += WebClient_StartLoadingUrl;
+			webClient.ShouldStartPageLoading += WebClient_ShouldStartPageLoading;
+
+			return webClient;
 		}
 
 		private void WebClient_ReceivedError(string arg1, string arg2, int arg3)
@@ -206,15 +191,6 @@ namespace HybridWebControl.Droid
 			}
 		}
 
-		private void Inject(string script)
-		{
-			if (Control != null)
-			{
-				this.Control.LoadUrl(string.Format("javascript: {0}", script));
-				//this.Control.EvaluateJavascript(script, JavascriptCallback);
-			}
-		}
-
 		private void WebClient_StartLoadingUrl(string obj)
 		{
 			if (PageLoadStarted != null)
@@ -230,20 +206,6 @@ namespace HybridWebControl.Droid
 				return this.PageLoadRequest(new Uri(arg));
 			}
 			return false;
-		}
-
-		private void TryInvoke(string function, string data)
-		{
-			Action<string> action;
-
-			if (this.Element != null && this.Element.TryGetAction(function, out action))
-			{
-				action.Invoke(data);
-			}
-			else
-			{
-				System.Diagnostics.Debug.WriteLine("Unhandled callback {0} was called from JavaScript", function);
-			}
 		}
 	}
 }

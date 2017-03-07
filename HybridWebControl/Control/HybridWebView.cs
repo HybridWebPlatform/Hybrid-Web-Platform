@@ -14,7 +14,6 @@ namespace HybridWebControl
 		private string currentHash;
 		private IHybridWebViewActionSource actionSource;
 
-		private readonly object injectLock = new object();
 		private readonly IJsonSerializer jsonSerializer;
 		private readonly Dictionary<string, Action<string>> registeredActions;
 		private readonly Dictionary<string, Func<string, object[]>> registeredFunctions;
