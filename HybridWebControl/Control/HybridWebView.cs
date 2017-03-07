@@ -19,6 +19,11 @@ namespace HybridWebControl
 		private readonly Dictionary<string, Action<string>> registeredActions;
 		private readonly Dictionary<string, Func<string, object[]>> registeredFunctions;
 
+		public HybridWebView() : this((Resolver.IsSet ? Resolver.Resolve<IJsonSerializer>() : null)
+				?? DependencyService.Get<IJsonSerializer>() ?? new SystemJsonSerializer())
+		{
+		}
+
 		public HybridWebView(IJsonSerializer jsonSerializer)
 		{
 			this.jsonSerializer = jsonSerializer;
