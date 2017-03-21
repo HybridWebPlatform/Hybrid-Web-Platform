@@ -37,6 +37,19 @@ namespace HybridWebPlatform.iOS
 			decisionHandler(action);
 		}
 
+		public override void DecidePolicy(WKWebView webView, WKNavigationResponse navigationResponse, Action<WKNavigationResponsePolicy> decisionHandler)
+		{
+			NSHttpUrlResponse response = navigationResponse.Response as NSHttpUrlResponse;
+			NSHttpCookie[] cookies = NSHttpCookie.CookiesWithResponseHeaderFields(response.AllHeaderFields, response.Url);
+
+			foreach (NSHttpCookie cookie in cookies)
+			{
+				NSHttpCookieStorage.SharedStorage.SetCookie(cookie);
+			}
+
+			decisionHandler(WKNavigationResponsePolicy.Allow);
+		}
+
 		public override void DidStartProvisionalNavigation(WKWebView webView, WKNavigation navigation)
 		{
 			if (StartLoadingUrl != null)
