@@ -81,6 +81,11 @@ namespace HybridWebControl.Droid
 			this.Control.LoadUrl(page.AbsoluteUri);
 		}
 
+		public void LoadFromString(string html)
+		{
+			this.Control.LoadData(html, "text/html", "UTF-8");
+		}
+
 		public void ExecuteJavascript(string javascript)
 		{
 			Inject(javascript);
@@ -97,7 +102,11 @@ namespace HybridWebControl.Droid
 		{
 			var d = GetWebChromeClientDelegate;
 
-			return d != null ? d(this) : new WebPlatformChromeClient(null);
+			var client = d != null ? d(this) : new WebPlatformChromeClient(null);
+
+			client.OpenExternalWindow += LoadUrlInExternalWindow;
+
+			return client;
 		}
 
 		protected override void OnElementChanged(ElementChangedEventArgs<HybridWebView> e)
@@ -174,6 +183,14 @@ namespace HybridWebControl.Droid
 			return webClient;
 		}
 
+		private void LoadUrlInExternalWindow(Uri obj)
+		{
+			if (PageLoadInNewWindowRequest != null)
+			{
+				PageLoadInNewWindowRequest(obj);
+			}
+		}
+
 		private void WebClient_ReceivedError(string arg1, string arg2, int arg3)
 		{
 			if (PageLoadError != null)
@@ -203,10 +220,44 @@ namespace HybridWebControl.Droid
 
 		private bool WebClient_ShouldStartPageLoading(string arg)
 		{
+			Uri page = new Uri(arg);
+
+			if (CheckIfUriIsMailtoOrPhoneNumber(page))
+			{
+				return true;
+			}
+
 			if (PageLoadRequest != null)
 			{
-				return this.PageLoadRequest(new Uri(arg));
+				return this.PageLoadRequest(page);
 			}
+			return false;
+		}
+
+		private bool CheckIfUriIsMailtoOrPhoneNumber(Uri uri)
+		{
+			if (string.Equals(uri.Scheme, "mailto", StringComparison.OrdinalIgnoreCase))
+			{
+				Intent i = new Intent(Intent.ActionSendto, Android.Net.Uri.Parse(uri.AbsoluteUri));
+
+				i.AddFlags(ActivityFlags.NewTask);
+
+				this.Control.StartActivity(i);
+
+				return true;
+			}
+
+			if (string.Equals(uri.Scheme, "tel", StringComparison.OrdinalIgnoreCase))
+			{
+				Intent i = new Intent(Intent.ActionDial, Android.Net.Uri.Parse(uri.AbsoluteUri));
+
+				i.AddFlags(ActivityFlags.NewTask);
+
+				this.Control.StartActivity(i);
+
+				return true;
+			}
+
 			return false;
 		}
 	}
