@@ -24,6 +24,7 @@ namespace HybridWebControl.iOS
 		public event Action<Uri> PageLoadFinished;
 		public event Action<Uri, string, int> PageLoadError;
 		public event Action<string> JavascriptExecuted;
+		public event Action<Uri> PageLoadInNewWindowRequest;
 
 		private WKUserContentController userController;
 
@@ -145,6 +146,7 @@ namespace HybridWebControl.iOS
 			navigationDelegate.FinishedLoadingUrl += NavigationDelegate_FinishedLoadingUrl;
 			navigationDelegate.StartLoadingUrl += NavigationDelegate_StartLoadingUrl;
 			navigationDelegate.ShouldStartPageLoading += NavigationDelegate_ShouldStartPageLoading;
+			navigationDelegate.OpenExternalWindow += NavigationDelegate_OpenExternalWindow;
 
 			return navigationDelegate;
 		}
@@ -180,6 +182,14 @@ namespace HybridWebControl.iOS
 				return this.PageLoadRequest(new Uri(arg));
 			}
 			return true;
+		}
+
+		private void NavigationDelegate_OpenExternalWindow(Uri obj)
+		{
+			if (PageLoadInNewWindowRequest != null)
+			{
+				this.PageLoadInNewWindowRequest(obj);
+			}
 		}
 	}
 }

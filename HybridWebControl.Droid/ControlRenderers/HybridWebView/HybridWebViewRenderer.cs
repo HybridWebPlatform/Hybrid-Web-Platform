@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using HybridWebControl.Droid;
 using HybridWebControl;
+using XLabs.Platform;
 
 [assembly: ExportRenderer(typeof(HybridWebView), typeof(HybridWebViewRenderer))]
 namespace HybridWebControl.Droid
@@ -31,6 +32,7 @@ namespace HybridWebControl.Droid
 		public event Action<Uri> PageLoadFinished;
 		public event Action<Uri, string, int> PageLoadError;
 		public event Action<string> JavascriptExecuted;
+		public event Action<Uri> PageLoadInNewWindowRequest;
 
 		private const string NativeFuncCall = "Xamarin.call";
 		private const string NativeFunction = "function Native(action, data){Xamarin.call(JSON.stringify({ a: action, d: data }));}";

@@ -10,6 +10,7 @@ namespace HybridWebPlatform.iOS
 		public event Action<string> StartLoadingUrl;
 		public event Action<string> FinishedLoadingUrl;
 		public event Func<string, bool> ShouldStartPageLoading;
+		public event Action<Uri> OpenExternalWindow;
 
 		public WebPlatformNavigationDelegate()
 		{
@@ -18,6 +19,15 @@ namespace HybridWebPlatform.iOS
 		public override void DecidePolicy(WKWebView webView, WKNavigationAction navigationAction, Action<WKNavigationActionPolicy> decisionHandler)
 		{
 			var action = WKNavigationActionPolicy.Allow;
+
+			if (navigationAction.TargetFrame == null)
+			{
+				if (OpenExternalWindow != null)
+				{
+					OpenExternalWindow(new Uri(navigationAction.Request.Url.AbsoluteString));
+				}
+				decisionHandler(WKNavigationActionPolicy.Cancel);
+			}
 
 			if (ShouldStartPageLoading != null)
 			{

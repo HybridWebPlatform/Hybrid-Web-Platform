@@ -69,6 +69,7 @@ namespace HybridWebControl
 		public event Action<Uri> PageLoadStarted;
 		public event Action<Uri> PageLoadFinished;
 		public event Action<Uri, string, int> PageLoadError;
+		public event Action<Uri> NewWebBrowserWindowOpenRequest;
 
 		//Required Js actions
 
@@ -179,6 +180,7 @@ namespace HybridWebControl
 			this.actionSource.PageLoadStarted += this.PageLoadStarted;
 			this.actionSource.PageLoadFinished += this.PageLoadFinished;
 			this.actionSource.PageLoadError += this.PageLoadError;
+			this.actionSource.PageLoadInNewWindowRequest += this.NewWebBrowserWindowOpenRequest;
 		}
 
 		internal bool TryGetAction(string name, out Action<string> action)
@@ -228,6 +230,14 @@ namespace HybridWebControl
 			}
 		}
 
+		internal void OnNewWebBrowserWindowOpenRequest(Uri uri)
+		{
+			if (NewWebBrowserWindowOpenRequest != null)
+			{
+				NewWebBrowserWindowOpenRequest(uri);
+			}
+		}
+
 		internal static string GetInitialJsScript(string nativeFunction)
 		{
 			var builder = new StringBuilder();
@@ -256,6 +266,7 @@ namespace HybridWebControl
 			this.actionSource.PageLoadStarted -= this.PageLoadStarted;
 			this.actionSource.PageLoadFinished -= this.PageLoadFinished;
 			this.actionSource.PageLoadError -= this.PageLoadError;
+			this.actionSource.PageLoadInNewWindowRequest -= this.NewWebBrowserWindowOpenRequest;
 		}
 	}
 }

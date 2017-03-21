@@ -109,6 +109,7 @@
     <Compile Include="ControlRenderers\HybridWebView\WebPlatformNativeView.cs" />
     <Compile Include="ControlRenderers\HybridWebView\WebPlatformViewClient.cs" />
     <Compile Include="ControlRenderers\HybridWebView\WebPlatformXamarinApi.cs" />
+    <Compile Include="ControlRenderers\HybridWebView\WebPlatformNewWindowViewClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
