@@ -55,9 +55,6 @@
     <Reference Include="XLabs.Serialization">
       <HintPath>..\packages\XLabs.Serialization.2.3.0-pre05\lib\portable-net45+netcore45+wpa81+wp8+monoandroid+monotouch+xamarinios10+xamarinmac\XLabs.Serialization.dll</HintPath>
     </Reference>
-    <Reference Include="XLabs.Platform">
-      <HintPath>..\packages\XLabs.Platform.2.3.0-pre05\lib\portable-net45+win8+wpa81+wp8+monoandroid+monotouch+xamarinios10\XLabs.Platform.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
