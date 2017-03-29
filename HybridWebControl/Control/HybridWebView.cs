@@ -55,6 +55,14 @@ namespace HybridWebControl
 			}
 		}
 
+		public bool IsLoading
+		{
+			get
+			{
+				return actionSource.IsLoading;
+			}
+		}
+
 		public string CurrentHashAnchor
 		{
 			get
@@ -129,7 +137,14 @@ namespace HybridWebControl
 
 			if (!string.IsNullOrEmpty(hashResult))
 			{
-				LoadHashAnchor(hashResult);
+				Task.Factory.StartNew(() =>
+				{
+					while (this.IsLoading)
+					{
+						Task.Delay(100).Wait();
+					}
+					LoadHashAnchor(hashResult);
+				});
 			}
 		}
 

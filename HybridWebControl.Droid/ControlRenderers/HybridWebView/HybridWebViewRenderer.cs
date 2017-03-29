@@ -34,6 +34,7 @@ namespace HybridWebControl.Droid
 		public event Action<string> JavascriptExecuted;
 		public event Action<Uri> PageLoadInNewWindowRequest;
 
+		private WebPlatformViewClient viewClient;
 		private const string NativeFuncCall = "Xamarin.call";
 		private const string NativeFunction = "function Native(action, data){Xamarin.call(JSON.stringify({ a: action, d: data }));}";
 
@@ -58,6 +59,14 @@ namespace HybridWebControl.Droid
 			get
 			{
 				return this.Control.Url;
+			}
+		}
+
+		public bool IsLoading
+		{
+			get
+			{
+				return this.viewClient.IsLoading;
 			}
 		}
 
@@ -122,7 +131,9 @@ namespace HybridWebControl.Droid
 				webView.SetLayerType(EnableHardwareRendering ? LayerType.Hardware : LayerType.Software, null);
 				webView.SetBackgroundColor(Color.Transparent.ToAndroid());
 
-				webView.SetWebViewClient(this.CreateWebClient());
+				this.viewClient = this.CreateWebClient();
+
+				webView.SetWebViewClient(viewClient);
 				webView.SetWebChromeClient(this.GetWebChromeClient());
 
 				webView.Settings.JavaScriptEnabled = true;

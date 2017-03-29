@@ -10,8 +10,15 @@ namespace HybridWebControl.Droid
 		public event Action<string> FinishedLoadingUrl;
 		public event Func<string, bool> ShouldStartPageLoading;
 
+		public bool IsLoading
+		{
+			get;
+			private set;
+		}
+
 		public override void OnReceivedError(WebView view, ClientError errorCode, string description, string failingUrl)
 		{
+			IsLoading = false;
 			base.OnReceivedError(view, errorCode, description, failingUrl);
 
 			if (ReceivedError != null)
@@ -22,6 +29,7 @@ namespace HybridWebControl.Droid
 
 		public override void OnReceivedError(WebView view, IWebResourceRequest request, WebResourceError error)
 		{
+			IsLoading = false;
 			base.OnReceivedError(view, request, error);
 
 			if (ReceivedError != null)
@@ -41,6 +49,7 @@ namespace HybridWebControl.Droid
 
 		public override void OnPageStarted(WebView view, string url, Android.Graphics.Bitmap favicon)
 		{
+			IsLoading = true;
 			if (StartLoadingUrl != null)
 			{
 				StartLoadingUrl(url);
@@ -49,6 +58,7 @@ namespace HybridWebControl.Droid
 
 		public override void OnPageFinished(WebView view, string url)
 		{
+			IsLoading = false;
 			if (FinishedLoadingUrl != null)
 			{
 				FinishedLoadingUrl(url);

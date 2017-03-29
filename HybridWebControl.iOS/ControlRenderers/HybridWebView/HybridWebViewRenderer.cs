@@ -55,6 +55,14 @@ namespace HybridWebControl.iOS
 			}
 		}
 
+		public bool IsLoading
+		{
+			get
+			{
+				return this.Control.IsLoading;
+			}
+		}
+
 		public override SizeRequest GetDesiredSize(double widthConstraint, double heightConstraint)
 		{
 			return new SizeRequest(Size.Zero, Size.Zero);

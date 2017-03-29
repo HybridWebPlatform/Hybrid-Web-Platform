@@ -15,6 +15,11 @@ namespace HybridWebControl
 			get;
 		}
 
+		bool IsLoading
+		{
+			get;
+		}
+
 		string CurrentUrl
 		{
 			get;
