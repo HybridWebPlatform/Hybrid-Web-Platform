@@ -10,3 +10,9 @@ It solve the following problems for:
   - Allow to call C# from JavaScript
 - XLabs.WebView
   - Fix perfromance issue on Android (Hardware accelaration)
+
+## Road Map
+
+- [ ] Enable Hardware accelaration by default (actual for Android)
+- [ ] Support UWP
+- [ ] Fix keyboard overlap issue on Android
