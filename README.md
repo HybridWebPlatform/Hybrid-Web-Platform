@@ -1,13 +1,13 @@
 ## Abstract
-Full-fledged WebView as Xamarin.Forms plugin (XLabs based) with cross-platform C# to JavaScript and JavaScript to C# calls support. Eventually invented for painless hybrid apps creation.
+Full-fledged WebView as Xamarin.Forms plugin (XLabs based) with cross-platform C# to JavaScript and JavaScript to C# calls support. Built for painless hybrid apps creation.
 
-HybridWebPlatform based on great XLabs core components, but it's _not_ based on [XLabs.HybridWebView](https://github.com/XLabs/Xamarin-Forms-Labs/wiki/HybridWebView). Moreover, HybridWebPlatform replacing XLabs.HybridWebView as more advanced and not legacy plugin.
+HybridWebPlatform based on great XLabs core components, but does not depends on [XLabs.HybridWebView](https://github.com/XLabs/Xamarin-Forms-Labs/wiki/HybridWebView). Moreover, HybridWebPlatform replacing XLabs.HybridWebView as more advanced and not legacy plugin.
 
 ## HybridWebPlatform Advantages
-It solve the following problems for:
+It solves the following problems for:
 
 - Xamrin.Forms WebView
-  - Allow to call C# from JavaScript
+  - Allows to call C# from JavaScript
 - XLabs.WebView
   - Fix rendering perfromance issue on Android (Hardware rendering)
 
