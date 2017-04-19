@@ -8,7 +8,7 @@ namespace HybridWebControl.Droid
 		public event Action<string, string, int> ReceivedError;
 		public event Action<string> StartLoadingUrl;
 		public event Action<string> FinishedLoadingUrl;
-		public event Func<string, bool> ShouldStartPageLoading;
+		public event Func<string, bool> OverrideUrlLoading;
 
 		public bool IsLoading
 		{
@@ -40,9 +40,9 @@ namespace HybridWebControl.Droid
 
 		public override bool ShouldOverrideUrlLoading(WebView view, string url)
 		{
-			if (ShouldStartPageLoading != null)
+			if (OverrideUrlLoading != null)
 			{
-				return ShouldStartPageLoading(url);
+				return OverrideUrlLoading(url);
 			}
 			return false;
 		}

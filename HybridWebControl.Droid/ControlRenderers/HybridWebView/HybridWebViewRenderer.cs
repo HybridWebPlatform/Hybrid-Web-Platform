@@ -189,7 +189,7 @@ namespace HybridWebControl.Droid
 			webClient.ReceivedError += WebClient_ReceivedError;
 			webClient.FinishedLoadingUrl += WebClient_FinishedLoadingUrl;
 			webClient.StartLoadingUrl += WebClient_StartLoadingUrl;
-			webClient.ShouldStartPageLoading += WebClient_ShouldStartPageLoading;
+			webClient.OverrideUrlLoading += WebClient_OverrideUrlLoading;
 
 			return webClient;
 		}
@@ -229,7 +229,7 @@ namespace HybridWebControl.Droid
 			}
 		}
 
-		private bool WebClient_ShouldStartPageLoading(string arg)
+		private bool WebClient_OverrideUrlLoading(string arg)
 		{
 			Uri page = new Uri(arg);
 
@@ -240,7 +240,8 @@ namespace HybridWebControl.Droid
 
 			if (PageLoadRequest != null)
 			{
-				return this.PageLoadRequest(page);
+				//We negate the result here as if page load request == true we should not override the page request
+				return !this.PageLoadRequest(page);
 			}
 			return false;
 		}
