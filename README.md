@@ -17,7 +17,7 @@ It solves the following problems for:
 - [ ] Fix keyboard overlap issue on Android
 
 ## How-to Use
-1. Install NuGet package for all PCL, Android and iOS projects using e.g. Xamarin Studio
+1. Install NuGet package for all PCL, Android and iOS projects using e.g. Xamarin Studio. *To install NuGet correctly, make sure you use Profile111 for PCL.*
 1. [Android specific] Enable hardware rendering using the following code within _MainActivity.OnCreate()_ class before _LoadApplication()_ invoke.
 ```
 // ...
