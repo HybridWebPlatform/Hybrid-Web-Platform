@@ -18,7 +18,10 @@ It solves the following problems for:
 
 ## How-to Use
 1. Install NuGet package for all PCL, Android and iOS projects using e.g. Xamarin Studio. *To install NuGet correctly, make sure you use Profile111 for PCL.*
-1. [Android specific] Enable hardware rendering using the following code within _MainActivity.OnCreate()_ class before _LoadApplication()_ invoke.
+1. [iOS] Invoke Renderer (TBD)
+1. Warning! Use LoadPage() from loading event handler, e.g. OnAppearing() for page
+1. [Android] Add Android.Export (http://stackoverflow.com/questions/31085554/you-need-to-add-a-reference-to-mono-android-export-dll-when-you-use-exportattrib)
+1. [Android][Optional] Enable hardware rendering using the following code within _MainActivity.OnCreate()_ class before _LoadApplication()_ invoke.
 ```
 // ...
 HybridWebControl.Droid.HybridWebViewRenderer.EnableHardwareRendering = true;
