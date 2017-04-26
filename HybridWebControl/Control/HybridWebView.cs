@@ -191,11 +191,11 @@ namespace HybridWebControl
 		{
 			UnregisterOldWebActionSource();
 			this.actionSource = source;
-			this.actionSource.PageLoadRequest += this.PageLoadRequest;
-			this.actionSource.PageLoadStarted += this.PageLoadStarted;
-			this.actionSource.PageLoadFinished += this.PageLoadFinished;
-			this.actionSource.PageLoadError += this.PageLoadError;
-			this.actionSource.PageLoadInNewWindowRequest += this.NewWebBrowserWindowOpenRequest;
+			this.actionSource.PageLoadRequest += this.PageLoadRequestHandler;
+			this.actionSource.PageLoadStarted += this.PageLoadStartedHandler;
+			this.actionSource.PageLoadFinished += this.PageLoadFinishedHandler;
+			this.actionSource.PageLoadError += this.PageLoadErrorHandler;
+			this.actionSource.PageLoadInNewWindowRequest += this.NewWebBrowserWindowOpenRequestHandler;
 		}
 
 		internal bool TryGetAction(string name, out Action<string> action)
@@ -277,11 +277,53 @@ namespace HybridWebControl
 		{
 			if (this.actionSource == null) return;
 
-			this.actionSource.PageLoadRequest -= this.PageLoadRequest;
-			this.actionSource.PageLoadStarted -= this.PageLoadStarted;
-			this.actionSource.PageLoadFinished -= this.PageLoadFinished;
-			this.actionSource.PageLoadError -= this.PageLoadError;
-			this.actionSource.PageLoadInNewWindowRequest -= this.NewWebBrowserWindowOpenRequest;
+			this.actionSource.PageLoadRequest -= this.PageLoadRequestHandler;
+			this.actionSource.PageLoadStarted -= this.PageLoadStartedHandler;
+			this.actionSource.PageLoadFinished -= this.PageLoadFinishedHandler;
+			this.actionSource.PageLoadError -= this.PageLoadErrorHandler;
+			this.actionSource.PageLoadInNewWindowRequest -= this.NewWebBrowserWindowOpenRequestHandler;
+		}
+
+		private bool PageLoadRequestHandler(Uri uri)
+		{
+			if (PageLoadRequest != null)
+			{
+				return PageLoadRequest(uri);
+			}
+
+			return true;
+		}
+
+		private void PageLoadStartedHandler(Uri uri)
+		{
+			if (PageLoadStarted != null)
+			{
+				PageLoadStarted(uri);
+			}
+		}
+
+		private void PageLoadFinishedHandler(Uri uri)
+		{
+			if (PageLoadFinished != null)
+			{
+				PageLoadFinished(uri);
+			}
+		}
+
+		private void PageLoadErrorHandler(Uri uri, string message, int errorCode)
+		{
+			if (PageLoadError != null)
+			{
+				PageLoadError(uri, message, errorCode);
+			}
+		}
+
+		private void NewWebBrowserWindowOpenRequestHandler(Uri uri)
+		{
+			if (NewWebBrowserWindowOpenRequest != null)
+			{
+				NewWebBrowserWindowOpenRequest(uri);
+			}
 		}
 	}
 }
