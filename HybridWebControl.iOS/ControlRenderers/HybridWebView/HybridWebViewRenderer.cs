@@ -125,6 +125,10 @@ namespace HybridWebControl.iOS
 
 				var webView = new WKWebView(Frame, config) { NavigationDelegate = CreateNavidationalDelagate() };
 
+				webView.Opaque = false;
+
+				webView.BackgroundColor = UIColor.Clear;
+
 				SetNativeControl(webView);
 			}
 
@@ -161,6 +165,7 @@ namespace HybridWebControl.iOS
 
 		private void NavigationDelegate_ReceivedError(string arg1, string arg2, int arg3)
 		{
+			UIApplication.SharedApplication.NetworkActivityIndicatorVisible = false;
 			if (PageLoadError != null)
 			{
 				this.PageLoadError(new Uri(arg1), arg2, arg3);
@@ -169,6 +174,7 @@ namespace HybridWebControl.iOS
 
 		private void NavigationDelegate_FinishedLoadingUrl(string obj)
 		{
+			UIApplication.SharedApplication.NetworkActivityIndicatorVisible = false;
 			if (PageLoadFinished != null)
 			{
 				this.PageLoadFinished(new Uri(obj));
@@ -177,6 +183,7 @@ namespace HybridWebControl.iOS
 
 		private void NavigationDelegate_StartLoadingUrl(string obj)
 		{
+			UIApplication.SharedApplication.NetworkActivityIndicatorVisible = true;
 			if (PageLoadStarted != null)
 			{
 				this.PageLoadStarted(new Uri(obj));
@@ -194,6 +201,7 @@ namespace HybridWebControl.iOS
 
 		private void NavigationDelegate_OpenExternalWindow(Uri obj)
 		{
+			UIApplication.SharedApplication.NetworkActivityIndicatorVisible = false;
 			if (PageLoadInNewWindowRequest != null)
 			{
 				this.PageLoadInNewWindowRequest(obj);
