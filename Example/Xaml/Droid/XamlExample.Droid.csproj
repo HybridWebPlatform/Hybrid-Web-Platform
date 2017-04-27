@@ -110,13 +110,13 @@
       <Project>{2FB55230-2E1C-435E-B649-4559327CDCE7}</Project>
       <Name>XamlExample</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\HybridWebControl\HybridWebControl.csproj">
+    <ProjectReference Include="..\..\..\HybridWebControl\HybridWebPlatform.csproj">
       <Project>{37DC4546-2D9A-4290-809E-E2D962DBB36A}</Project>
-      <Name>HybridWebControl</Name>
+      <Name>HybridWebPlatform</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\HybridWebControl.Droid\HybridWebControl.Droid.csproj">
+    <ProjectReference Include="..\..\..\HybridWebControl.Droid\HybridWebPlatform.Droid.csproj">
       <Project>{6EB5711B-B194-4724-BF95-FB3EF09C04C8}</Project>
-      <Name>HybridWebControl.Droid</Name>
+      <Name>HybridWebPlatform.Droid</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

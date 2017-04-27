@@ -2,28 +2,28 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using HybridWebControl.Contracts;
+using HybridWebPlatform.Contracts;
 using Xamarin.Forms;
 using XLabs.Ioc;
 using XLabs.Serialization;
 
-namespace HybridWebControl
+namespace HybridWebPlatform
 {
-	public class HybridWebView : View
+	public class HybridWebPlatformView : View
 	{
 		private string currentHash;
-		private IHybridWebViewActionSource actionSource;
+		private IHybridWebPlatformActionSource actionSource;
 
 		private readonly IJsonSerializer jsonSerializer;
 		private readonly Dictionary<string, Action<string>> registeredActions;
 		private readonly Dictionary<string, Func<string, object[]>> registeredFunctions;
 
-		public HybridWebView() : this((Resolver.IsSet ? Resolver.Resolve<IJsonSerializer>() : null)
+		public HybridWebPlatformView() : this((Resolver.IsSet ? Resolver.Resolve<IJsonSerializer>() : null)
 				?? DependencyService.Get<IJsonSerializer>() ?? new SystemJsonSerializer())
 		{
 		}
 
-		public HybridWebView(IJsonSerializer jsonSerializer)
+		public HybridWebPlatformView(IJsonSerializer jsonSerializer)
 		{
 			this.jsonSerializer = jsonSerializer;
 			this.registeredActions = new Dictionary<string, Action<string>>();
@@ -187,7 +187,7 @@ namespace HybridWebControl
 			this.registeredFunctions.Clear();
 		}
 
-		public void SetWebActionSource(IHybridWebViewActionSource source)
+		public void SetWebActionSource(IHybridWebPlatformActionSource source)
 		{
 			UnregisterOldWebActionSource();
 			this.actionSource = source;

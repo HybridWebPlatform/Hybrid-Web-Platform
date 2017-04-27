@@ -3,9 +3,9 @@ using System.Linq;
 using UIKit;
 using WebKit;
 
-namespace HybridWebControl.iOS
+namespace HybridWebPlatform.iOS
 {
-	class WebPlatformUIDelegate : WebKit.WKUIDelegate
+	class HybridWebPlatformUIDelegate : WebKit.WKUIDelegate
 	{
 		public override void RunJavaScriptAlertPanel(WKWebView webView, string message, WKFrameInfo frame, Action completionHandler)
 		{

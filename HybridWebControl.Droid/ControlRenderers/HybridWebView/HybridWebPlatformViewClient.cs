@@ -1,9 +1,9 @@
 ﻿using System;
 using Android.Webkit;
 
-namespace HybridWebControl.Droid
+namespace HybridWebPlatform.Droid
 {
-	public class WebPlatformViewClient : WebViewClient
+	public class HybridWebPlatformViewClient : WebViewClient
 	{
 		public event Action<string, string, int> ReceivedError;
 		public event Action<string> StartLoadingUrl;

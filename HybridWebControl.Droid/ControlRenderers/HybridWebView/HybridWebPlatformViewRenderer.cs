@@ -1,31 +1,22 @@
 ﻿using System;
-using System.Text;
-using System.Text.RegularExpressions;
 using Android.Content;
-using Android.Runtime;
 using Android.Views;
-using Android.Webkit;
-using Java.Interop;
+using HybridWebPlatform;
+using HybridWebPlatform.Droid;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
-using Object = Java.Lang.Object;
-using WebView = Android.Webkit.WebView;
-using System.Threading.Tasks;
-using System.Threading;
-using HybridWebControl.Droid;
-using HybridWebControl;
 using XLabs.Platform;
 
-[assembly: ExportRenderer(typeof(HybridWebView), typeof(HybridWebViewRenderer))]
-namespace HybridWebControl.Droid
+[assembly: ExportRenderer(typeof(HybridWebPlatformView), typeof(HybridWebPlatformViewRenderer))]
+namespace HybridWebPlatform.Droid
 {
-	public class HybridWebViewRenderer : ViewRenderer<HybridWebView, WebPlatformNativeView>, IHybridWebViewActionSource
+	public class HybridWebPlatformViewRenderer : ViewRenderer<HybridWebPlatformView, HybridWebPlatformNativeView>, IHybridWebPlatformActionSource
 	{
 		public static bool EnableHardwareRendering = false;
 		public static bool EnableAdditionalTouchGesturesHandling = true;
 
-		public static Func<HybridWebViewRenderer, WebPlatformViewClient> GetWebViewClientDelegate;
-		public static Func<HybridWebViewRenderer, WebPlatformChromeClient> GetWebChromeClientDelegate;
+		public static Func<HybridWebPlatformViewRenderer, HybridWebPlatformViewClient> GetWebViewClientDelegate;
+		public static Func<HybridWebPlatformViewRenderer, HybridWebPlatformChromeClient> GetWebChromeClientDelegate;
 
 		public event Func<Uri, bool> PageLoadRequest;
 		public event Action<Uri> PageLoadStarted;
@@ -34,7 +25,7 @@ namespace HybridWebControl.Droid
 		public event Action<string> JavascriptExecuted;
 		public event Action<Uri> PageLoadInNewWindowRequest;
 
-		private WebPlatformViewClient viewClient;
+		private HybridWebPlatformViewClient viewClient;
 		private const string NativeFuncCall = "Xamarin.call";
 		private const string NativeFunction = "function Native(action, data){Xamarin.call(JSON.stringify({ a: action, d: data }));}";
 
@@ -107,24 +98,24 @@ namespace HybridWebControl.Droid
 			return sizeRequest;
 		}
 
-		protected virtual WebPlatformChromeClient GetWebChromeClient()
+		protected virtual HybridWebPlatformChromeClient GetWebChromeClient()
 		{
 			var d = GetWebChromeClientDelegate;
 
-			var client = d != null ? d(this) : new WebPlatformChromeClient(null);
+			var client = d != null ? d(this) : new HybridWebPlatformChromeClient(null);
 
 			client.OpenExternalWindow += LoadUrlInExternalWindow;
 
 			return client;
 		}
 
-		protected override void OnElementChanged(ElementChangedEventArgs<HybridWebView> e)
+		protected override void OnElementChanged(ElementChangedEventArgs<HybridWebPlatformView> e)
 		{
 			base.OnElementChanged(e);
 
 			if (this.Control == null && e.NewElement != null)
 			{
-				var webView = new WebPlatformNativeView(this, EnableAdditionalTouchGesturesHandling);
+				var webView = new HybridWebPlatformNativeView(this, EnableAdditionalTouchGesturesHandling);
 
 				webView.Settings.JavaScriptEnabled = true;
 				webView.Settings.DomStorageEnabled = true;
@@ -147,7 +138,7 @@ namespace HybridWebControl.Droid
 				webView.Settings.SetSupportMultipleWindows(true);
 				webView.Settings.SetSupportZoom(false);
 
-				webView.AddJavascriptInterface(new WebPlatformXamarinApi(this), "Xamarin");
+				webView.AddJavascriptInterface(new HybridWebPlatformXamarinApi(this), "Xamarin");
 
 				this.SetNativeControl(webView);
 
@@ -179,12 +170,12 @@ namespace HybridWebControl.Droid
 			}
 		}
 
-		private WebPlatformViewClient CreateWebClient()
+		private HybridWebPlatformViewClient CreateWebClient()
 		{
 
 			var creationDelegate = GetWebViewClientDelegate;
 
-			var webClient = creationDelegate != null ? creationDelegate(this) : new WebPlatformViewClient();
+			var webClient = creationDelegate != null ? creationDelegate(this) : new HybridWebPlatformViewClient();
 
 			webClient.ReceivedError += WebClient_ReceivedError;
 			webClient.FinishedLoadingUrl += WebClient_FinishedLoadingUrl;
@@ -213,7 +204,7 @@ namespace HybridWebControl.Droid
 		private void WebClient_FinishedLoadingUrl(string obj)
 		{
 			this.Inject(NativeFunction);
-			this.Inject(HybridWebView.GetInitialJsScript(NativeFuncCall));
+			this.Inject(HybridWebPlatformView.GetInitialJsScript(NativeFuncCall));
 
 			if (PageLoadFinished != null)
 			{

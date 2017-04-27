@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace HybridWebControl.Contracts
+namespace HybridWebPlatform.Contracts
 {
 	[DataContract]
 	public class HybridJavascriptMessage

@@ -6,8 +6,8 @@
     <ProjectGuid>{6EB5711B-B194-4724-BF95-FB3EF09C04C8}</ProjectGuid>
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
-    <RootNamespace>HybridWebControl.Droid</RootNamespace>
-    <AssemblyName>HybridWebControl.Droid</AssemblyName>
+    <RootNamespace>HybridWebPlatform.Droid</RootNamespace>
+    <AssemblyName>HybridWebPlatform.Droid</AssemblyName>
     <TargetFrameworkVersion>v7.1</TargetFrameworkVersion>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <AndroidResgenClass>Resource</AndroidResgenClass>
@@ -103,13 +103,13 @@
   <ItemGroup>
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ControlRenderers\HybridWebView\HybridWebViewRenderer.cs" />
-    <Compile Include="ControlRenderers\HybridWebView\WebPlatformChromeClient.cs" />
-    <Compile Include="ControlRenderers\HybridWebView\WebPlatformJavascriptCallback.cs" />
-    <Compile Include="ControlRenderers\HybridWebView\WebPlatformNativeView.cs" />
-    <Compile Include="ControlRenderers\HybridWebView\WebPlatformViewClient.cs" />
-    <Compile Include="ControlRenderers\HybridWebView\WebPlatformXamarinApi.cs" />
-    <Compile Include="ControlRenderers\HybridWebView\WebPlatformNewWindowViewClient.cs" />
+    <Compile Include="ControlRenderers\HybridWebView\HybridWebPlatformViewRenderer.cs" />
+    <Compile Include="ControlRenderers\HybridWebView\HybridWebPlatformChromeClient.cs" />
+    <Compile Include="ControlRenderers\HybridWebView\HybridWebPlatformJavascriptCallback.cs" />
+    <Compile Include="ControlRenderers\HybridWebView\HybridWebPlatformNativeView.cs" />
+    <Compile Include="ControlRenderers\HybridWebView\HybridWebPlatformViewClient.cs" />
+    <Compile Include="ControlRenderers\HybridWebView\HybridWebPlatformXamarinApi.cs" />
+    <Compile Include="ControlRenderers\HybridWebView\HybridWebPlatformNewWindowViewClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -122,9 +122,9 @@
     <Folder Include="ControlRenderers\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HybridWebControl\HybridWebControl.csproj">
+    <ProjectReference Include="..\HybridWebControl\HybridWebPlatform.csproj">
       <Project>{37DC4546-2D9A-4290-809E-E2D962DBB36A}</Project>
-      <Name>HybridWebControl</Name>
+      <Name>HybridWebPlatform</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

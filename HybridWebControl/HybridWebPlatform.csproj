@@ -5,10 +5,9 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{37DC4546-2D9A-4290-809E-E2D962DBB36A}</ProjectGuid>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <UseMSBuildEngine>true</UseMSBuildEngine>
     <OutputType>Library</OutputType>
-    <RootNamespace>HybridWebControl</RootNamespace>
-    <AssemblyName>HybridWebControl</AssemblyName>
+    <RootNamespace>HybridWebPlatform</RootNamespace>
+    <AssemblyName>HybridWebPlatform</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Profile111</TargetFrameworkProfile>
     <ReleaseVersion>1.0.0.6</ReleaseVersion>
@@ -31,8 +30,8 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Contracts\HybridJavascriptMessage.cs" />
-    <Compile Include="Control\IHybridWebViewActionSource.cs" />
-    <Compile Include="Control\HybridWebView.cs" />
+    <Compile Include="Control\IHybridWebPlatformActionSource.cs" />
+    <Compile Include="Control\HybridWebPlatformView.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">

@@ -6,8 +6,8 @@
     <ProjectGuid>{CBAFBB3A-83A4-4416-9897-A33E1595447E}</ProjectGuid>
     <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
-    <RootNamespace>HybridWebControl.iOS</RootNamespace>
-    <AssemblyName>HybridWebControl.iOS</AssemblyName>
+    <RootNamespace>HybridWebPlatform.iOS</RootNamespace>
+    <AssemblyName>HybridWebPlatform.iOS</AssemblyName>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
     <ReleaseVersion>1.0.0.6</ReleaseVersion>
   </PropertyGroup>
@@ -82,17 +82,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ControlRenderers\HybridWebView\HybridWebViewRenderer.cs" />
-    <Compile Include="ControlRenderers\HybridWebView\WebPlatformNavigationDelegate.cs" />
-    <Compile Include="ControlRenderers\HybridWebView\WebPlatformUIDelegate.cs" />
+    <Compile Include="ControlRenderers\HybridWebView\HybridWebPlatformViewRenderer.cs" />
+    <Compile Include="ControlRenderers\HybridWebView\HybridWebPlatformNavigationDelegate.cs" />
+    <Compile Include="ControlRenderers\HybridWebView\HybridWebPlatformUIDelegate.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HybridWebControl\HybridWebControl.csproj">
+    <ProjectReference Include="..\HybridWebControl\HybridWebPlatform.csproj">
       <Project>{37DC4546-2D9A-4290-809E-E2D962DBB36A}</Project>
-      <Name>HybridWebControl</Name>
+      <Name>HybridWebPlatform</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />

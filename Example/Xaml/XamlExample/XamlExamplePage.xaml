@@ -3,7 +3,7 @@
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:local="clr-namespace:XamlExample"
-	xmlns:hybrid="clr-namespace:HybridWebControl;assembly=HybridWebControl"
+	xmlns:hybrid="clr-namespace:HybridWebPlatform;assembly=HybridWebPlatform"
 	x:Class="XamlExample.XamlExamplePage">
-	<hybrid:HybridWebView x:Name="WebView"></hybrid:HybridWebView>
+	<hybrid:HybridWebPlatformView x:Name="WebView"></hybrid:HybridWebPlatformView>
 </ContentPage>

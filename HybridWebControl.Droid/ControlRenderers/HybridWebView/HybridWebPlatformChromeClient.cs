@@ -1,15 +1,15 @@
 ﻿using System;
 using Android.Webkit;
 
-namespace HybridWebControl.Droid
+namespace HybridWebPlatform.Droid
 {
-	public class WebPlatformChromeClient : WebChromeClient
+	public class HybridWebPlatformChromeClient : WebChromeClient
 	{
 		public event Action<Uri> OpenExternalWindow;
 
 		Action<IValueCallback, Java.Lang.String, Java.Lang.String> callback;
 
-		public WebPlatformChromeClient(Action<IValueCallback, Java.Lang.String, Java.Lang.String> callback)
+		public HybridWebPlatformChromeClient(Action<IValueCallback, Java.Lang.String, Java.Lang.String> callback)
 		{
 			this.callback = callback;
 		}
@@ -31,7 +31,7 @@ namespace HybridWebControl.Droid
 		public override bool OnCreateWindow(WebView view, bool isDialog, bool isUserGesture, Android.OS.Message resultMsg)
 		{
 			WebView newWebView = new WebView(view.Context);
-			newWebView.SetWebViewClient(new WebPlatformNewWindowViewClient(OpenExternalWindow));
+			newWebView.SetWebViewClient(new HybridWebPlatformNewWindowViewClient(OpenExternalWindow));
 			WebView.WebViewTransport transport = (WebView.WebViewTransport)resultMsg.Obj;
 			transport.WebView = newWebView;
 			resultMsg.SendToTarget();

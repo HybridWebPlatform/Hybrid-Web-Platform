@@ -3,14 +3,14 @@ using Android.Runtime;
 using Android.Views;
 using Android.Webkit;
 
-namespace HybridWebControl.Droid
+namespace HybridWebPlatform.Droid
 {
-	public class WebPlatformNativeView : WebView
+	public class HybridWebPlatformNativeView : WebView
 	{
 		private readonly GestureDetector detector;
 		private readonly bool enableDetector;
 
-		public WebPlatformNativeView(HybridWebViewRenderer renderer, bool enableAdditionalTouchDetector) : base(renderer.Context)
+		public HybridWebPlatformNativeView(HybridWebPlatformViewRenderer renderer, bool enableAdditionalTouchDetector) : base(renderer.Context)
 		{
 			enableDetector = enableAdditionalTouchDetector;
 
@@ -21,7 +21,7 @@ namespace HybridWebControl.Droid
 			}
 		}
 
-		public WebPlatformNativeView(IntPtr ptr, JniHandleOwnership handle) : base(ptr, handle)
+		public HybridWebPlatformNativeView(IntPtr ptr, JniHandleOwnership handle) : base(ptr, handle)
 		{
 
 		}
@@ -41,11 +41,11 @@ namespace HybridWebControl.Droid
 			private const int SWIPE_MAX_OFF_PATH = 200;
 			private const int SWIPE_THRESHOLD_VELOCITY = 200;
 
-			private readonly WeakReference<HybridWebViewRenderer> webHybrid;
+			private readonly WeakReference<HybridWebPlatformViewRenderer> webHybrid;
 
-			public MyGestureListener(HybridWebViewRenderer renderer)
+			public MyGestureListener(HybridWebPlatformViewRenderer renderer)
 			{
-				this.webHybrid = new WeakReference<HybridWebViewRenderer>(renderer);
+				this.webHybrid = new WeakReference<HybridWebPlatformViewRenderer>(renderer);
 			}
 
 			//                public override void OnLongPress(MotionEvent e)

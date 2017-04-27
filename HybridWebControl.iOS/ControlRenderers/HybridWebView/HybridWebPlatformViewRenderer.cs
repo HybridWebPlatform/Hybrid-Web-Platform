@@ -1,23 +1,16 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Text;
-using System.Text.RegularExpressions;
+using System;
 using Foundation;
+using HybridWebPlatform;
 using HybridWebPlatform.iOS;
 using UIKit;
 using WebKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
-using System.Threading.Tasks;
-using System.Threading;
-using HybridWebControl;
-using HybridWebControl.iOS;
 
-[assembly: ExportRenderer(typeof(HybridWebView), typeof(HybridWebViewRenderer))]
-namespace HybridWebControl.iOS
+[assembly: ExportRenderer(typeof(HybridWebPlatformView), typeof(HybridWebPlatformViewRenderer))]
+namespace HybridWebPlatform.iOS
 {
-	public class HybridWebViewRenderer : ViewRenderer<HybridWebView, WKWebView>, IWKScriptMessageHandler, IHybridWebViewActionSource
+	public class HybridWebPlatformViewRenderer : ViewRenderer<HybridWebPlatformView, WKWebView>, IWKScriptMessageHandler, IHybridWebPlatformActionSource
 	{
 		public event Func<Uri, bool> PageLoadRequest;
 		public event Action<Uri> PageLoadStarted;
@@ -104,7 +97,7 @@ namespace HybridWebControl.iOS
 			Inject(javascript);
 		}
 
-		protected override void OnElementChanged(ElementChangedEventArgs<HybridWebView> e)
+		protected override void OnElementChanged(ElementChangedEventArgs<HybridWebPlatformView> e)
 		{
 			base.OnElementChanged(e);
 
@@ -117,19 +110,20 @@ namespace HybridWebControl.iOS
 					UserContentController = userController
 				};
 
-				var script = new WKUserScript(new NSString(NativeFunction + HybridWebView.GetInitialJsScript(NativeFuncCall)), WKUserScriptInjectionTime.AtDocumentEnd, false);
+				var script = new WKUserScript(new NSString(NativeFunction + HybridWebPlatformView.GetInitialJsScript(NativeFuncCall)), WKUserScriptInjectionTime.AtDocumentEnd, false);
 
 				userController.AddUserScript(script);
 
 				userController.AddScriptMessageHandler(this, "native");
 
-				var webView = new WKWebView(Frame, config) { NavigationDelegate = CreateNavidationalDelagate(), UIDelegate = new WebPlatformUIDelegate() };
+				var webView = new WKWebView(Frame, config) { NavigationDelegate = CreateNavidationalDelagate(), UIDelegate = new HybridWebPlatformUIDelegate() };
 
 				webView.Opaque = false;
 
 				webView.BackgroundColor = UIColor.Clear;
 
 				SetNativeControl(webView);
+
 			}
 
 			e.NewElement.SetWebActionSource(this);
@@ -150,9 +144,9 @@ namespace HybridWebControl.iOS
 			}
 		}
 
-		private WebPlatformNavigationDelegate CreateNavidationalDelagate()
+		private HybridWebPlatformNavigationDelegate CreateNavidationalDelagate()
 		{
-			var navigationDelegate = new WebPlatformNavigationDelegate();
+			var navigationDelegate = new HybridWebPlatformNavigationDelegate();
 
 			navigationDelegate.ReceivedError += NavigationDelegate_ReceivedError;
 			navigationDelegate.FinishedLoadingUrl += NavigationDelegate_FinishedLoadingUrl;

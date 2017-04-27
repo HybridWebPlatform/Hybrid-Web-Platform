@@ -1,17 +1,17 @@
 ﻿using System;
-
+using HybridWebPlatform;
 using Xamarin.Forms;
-using HybridWebControl;
+
 
 namespace CodeExample
 {
 	public class App : Application
 	{
-		HybridWebView webView;
+		HybridWebPlatformView webView;
 
 		public App()
 		{
-			webView = new HybridWebView();
+			webView = new HybridWebPlatformView();
 			// The root page of your application
 			var content = new ContentPage
 			{

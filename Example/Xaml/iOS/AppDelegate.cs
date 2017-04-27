@@ -12,7 +12,7 @@ namespace XamlExample.iOS
 	{
 		public override bool FinishedLaunching(UIApplication app, NSDictionary options)
 		{
-			new HybridWebControl.iOS.HybridWebViewRenderer();
+			new HybridWebPlatform.iOS.HybridWebPlatformViewRenderer();
 
 			global::Xamarin.Forms.Forms.Init();
 

@@ -1,9 +1,9 @@
 using System;
 using System.Threading.Tasks;
 
-namespace HybridWebControl
+namespace HybridWebPlatform
 {
-	public interface IHybridWebViewActionSource
+	public interface IHybridWebPlatformActionSource
 	{
 		bool CanGoBack
 		{

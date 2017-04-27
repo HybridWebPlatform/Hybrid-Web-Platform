@@ -56,9 +56,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\HybridWebControl\HybridWebControl.csproj">
+    <ProjectReference Include="..\..\..\HybridWebControl\HybridWebPlatform.csproj">
       <Project>{37DC4546-2D9A-4290-809E-E2D962DBB36A}</Project>
-      <Name>HybridWebControl</Name>
+      <Name>HybridWebPlatform</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

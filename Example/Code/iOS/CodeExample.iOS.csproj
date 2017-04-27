@@ -120,11 +120,11 @@
     </ProjectReference>
     <ProjectReference Include="..\..\..\HybridWebControl\HybridWebControl.csproj">
       <Project>{37DC4546-2D9A-4290-809E-E2D962DBB36A}</Project>
-      <Name>HybridWebControl</Name>
+      <Name>HybridWebPlatform</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\HybridWebControl.iOS\HybridWebControl.iOS.csproj">
       <Project>{CBAFBB3A-83A4-4416-9897-A33E1595447E}</Project>
-      <Name>HybridWebControl.iOS</Name>
+      <Name>HybridWebPlatform.iOS</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />

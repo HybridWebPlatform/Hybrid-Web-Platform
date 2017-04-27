@@ -4,7 +4,7 @@ using WebKit;
 
 namespace HybridWebPlatform.iOS
 {
-	public class WebPlatformNavigationDelegate : WKNavigationDelegate
+	public class HybridWebPlatformNavigationDelegate : WKNavigationDelegate
 	{
 		public event Action<string, string, int> ReceivedError;
 		public event Action<string> StartLoadingUrl;
@@ -12,7 +12,7 @@ namespace HybridWebPlatform.iOS
 		public event Func<string, bool> ShouldStartPageLoading;
 		public event Action<Uri> OpenExternalWindow;
 
-		public WebPlatformNavigationDelegate()
+		public HybridWebPlatformNavigationDelegate()
 		{
 		}
 

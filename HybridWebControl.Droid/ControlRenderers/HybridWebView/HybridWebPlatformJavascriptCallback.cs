@@ -2,13 +2,13 @@
 using Android.Webkit;
 using Java.Lang;
 
-namespace HybridWebControl.Droid
+namespace HybridWebPlatform.Droid
 {
-	public class WebPlatformJavascriptCallback : Java.Lang.Object, IValueCallback
+	public class HybridWebPlatformJavascriptCallback : Java.Lang.Object, IValueCallback
 	{
 		public event Action<string> ReceivedCallback;
 
-		public WebPlatformJavascriptCallback()
+		public HybridWebPlatformJavascriptCallback()
 		{
 		}
 

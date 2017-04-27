@@ -19,8 +19,8 @@ using System.Runtime.CompilerServices;
 
 [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: InternalsVisibleTo("HybridWebControl.Droid")]
-[assembly: InternalsVisibleTo("HybridWebControl.iOS")]
+[assembly: InternalsVisibleTo("HybridWebPlatform.Droid")]
+[assembly: InternalsVisibleTo("HybridWebPlatform.iOS")]
 
 // The following attributes are used to specify the signing key for the assembly, 
 // if desired. See the Mono documentation for more information about signing.

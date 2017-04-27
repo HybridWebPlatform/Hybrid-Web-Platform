@@ -1,13 +1,13 @@
 ﻿using System;
 using Android.Webkit;
 
-namespace HybridWebControl.Droid
+namespace HybridWebPlatform.Droid
 {
-	public class WebPlatformNewWindowViewClient : WebViewClient
+	public class HybridWebPlatformNewWindowViewClient : WebViewClient
 	{
 		Action<Uri> openExternalLink;
 
-		public WebPlatformNewWindowViewClient(Action<Uri> openExternalLink)
+		public HybridWebPlatformNewWindowViewClient(Action<Uri> openExternalLink)
 		{
 			this.openExternalLink = openExternalLink;
 		}
