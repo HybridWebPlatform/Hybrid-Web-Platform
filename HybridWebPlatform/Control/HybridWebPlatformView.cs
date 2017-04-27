@@ -13,6 +13,7 @@ namespace HybridWebPlatform
 	{
 		private string currentHash;
 		private IHybridWebPlatformActionSource actionSource;
+		private TaskCompletionSource<bool> rendererLoadedSource;
 
 		private readonly IJsonSerializer jsonSerializer;
 		private readonly Dictionary<string, Action<string>> registeredActions;
@@ -28,6 +29,7 @@ namespace HybridWebPlatform
 			this.jsonSerializer = jsonSerializer;
 			this.registeredActions = new Dictionary<string, Action<string>>();
 			this.registeredFunctions = new Dictionary<string, Func<string, object[]>>();
+			rendererLoadedSource = new TaskCompletionSource<bool>();
 			RegisterHybridInternalJavascriptCallbacks();
 		}
 
@@ -121,6 +123,12 @@ namespace HybridWebPlatform
 
 		public void LoadPage(Uri page)
 		{
+			if (actionSource == null)
+			{
+				CheckIfRendererLoaded(page);
+				return;
+			}
+
 			string actualLink = page.AbsoluteUri;
 			string hashResult = null;
 
@@ -196,6 +204,7 @@ namespace HybridWebPlatform
 			this.actionSource.PageLoadFinished += this.PageLoadFinishedHandler;
 			this.actionSource.PageLoadError += this.PageLoadErrorHandler;
 			this.actionSource.PageLoadInNewWindowRequest += this.NewWebBrowserWindowOpenRequestHandler;
+			rendererLoadedSource.SetResult(true);
 		}
 
 		internal bool TryGetAction(string name, out Action<string> action)
@@ -277,6 +286,7 @@ namespace HybridWebPlatform
 		{
 			if (this.actionSource == null) return;
 
+			rendererLoadedSource = new TaskCompletionSource<bool>();
 			this.actionSource.PageLoadRequest -= this.PageLoadRequestHandler;
 			this.actionSource.PageLoadStarted -= this.PageLoadStartedHandler;
 			this.actionSource.PageLoadFinished -= this.PageLoadFinishedHandler;
@@ -324,6 +334,12 @@ namespace HybridWebPlatform
 			{
 				NewWebBrowserWindowOpenRequest(uri);
 			}
+		}
+
+		private async Task CheckIfRendererLoaded(Uri url)
+		{
+			await rendererLoadedSource.Task;
+			LoadPage(url);
 		}
 	}
 }

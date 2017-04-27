@@ -7,12 +7,6 @@ namespace XamlExample
 		public XamlExamplePage()
 		{
 			InitializeComponent();
-		}
-
-
-		protected override void OnAppearing()
-		{
-			base.OnAppearing();
 			WebView.LoadPage(new System.Uri("http://google.com"));
 		}
 	}
