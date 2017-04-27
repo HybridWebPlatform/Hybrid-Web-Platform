@@ -110,11 +110,11 @@
       <Project>{2FB55230-2E1C-435E-B649-4559327CDCE7}</Project>
       <Name>XamlExample</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\HybridWebControl\HybridWebPlatform.csproj">
+    <ProjectReference Include="..\..\..\HybridWebPlatform\HybridWebPlatform.csproj">
       <Project>{37DC4546-2D9A-4290-809E-E2D962DBB36A}</Project>
       <Name>HybridWebPlatform</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\HybridWebControl.Droid\HybridWebPlatform.Droid.csproj">
+    <ProjectReference Include="..\..\..\HybridWebPlatform.Droid\HybridWebPlatform.Droid.csproj">
       <Project>{6EB5711B-B194-4724-BF95-FB3EF09C04C8}</Project>
       <Name>HybridWebPlatform.Droid</Name>
     </ProjectReference>

@@ -118,11 +118,11 @@
       <Project>{2FB55230-2E1C-435E-B649-4559327CDCE7}</Project>
       <Name>XamlExample</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\HybridWebControl\HybridWebPlatform.csproj">
+    <ProjectReference Include="..\..\..\HybridWebPlatform\HybridWebPlatform.csproj">
       <Project>{37DC4546-2D9A-4290-809E-E2D962DBB36A}</Project>
       <Name>HybridWebPlatform</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\HybridWebControl.iOS\HybridWebPlatform.iOS.csproj">
+    <ProjectReference Include="..\..\..\HybridWebPlatform.iOS\HybridWebPlatform.iOS.csproj">
       <Project>{CBAFBB3A-83A4-4416-9897-A33E1595447E}</Project>
       <Name>HybridWebPlatform.iOS</Name>
     </ProjectReference>

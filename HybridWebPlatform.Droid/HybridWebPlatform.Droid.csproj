@@ -122,7 +122,7 @@
     <Folder Include="ControlRenderers\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HybridWebControl\HybridWebPlatform.csproj">
+    <ProjectReference Include="..\HybridWebPlatform\HybridWebPlatform.csproj">
       <Project>{37DC4546-2D9A-4290-809E-E2D962DBB36A}</Project>
       <Name>HybridWebPlatform</Name>
     </ProjectReference>

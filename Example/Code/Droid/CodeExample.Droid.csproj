@@ -110,11 +110,11 @@
       <Project>{D7BEA3ED-8BAD-484D-9D55-6140A59D93EC}</Project>
       <Name>CodeExample</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\HybridWebControl\HybridWebControl.csproj">
+    <ProjectReference Include="..\..\..\HybridWebPlatform\HybridWebPlatform.csproj">
       <Project>{37DC4546-2D9A-4290-809E-E2D962DBB36A}</Project>
       <Name>HybridWebPlatform</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\HybridWebControl.Droid\HybridWebControl.Droid.csproj">
+    <ProjectReference Include="..\..\..\HybridWebPlatform.Droid\HybridWebPlatform.Droid.csproj">
       <Project>{6EB5711B-B194-4724-BF95-FB3EF09C04C8}</Project>
       <Name>HybridWebPlatform.Droid</Name>
     </ProjectReference>
