@@ -123,7 +123,7 @@ namespace HybridWebControl.iOS
 
 				userController.AddScriptMessageHandler(this, "native");
 
-				var webView = new WKWebView(Frame, config) { NavigationDelegate = CreateNavidationalDelagate() };
+				var webView = new WKWebView(Frame, config) { NavigationDelegate = CreateNavidationalDelagate(), UIDelegate = new WebPlatformUIDelegate() };
 
 				webView.Opaque = false;
 
