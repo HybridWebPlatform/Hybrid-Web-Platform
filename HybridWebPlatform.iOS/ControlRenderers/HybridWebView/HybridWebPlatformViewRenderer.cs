@@ -10,7 +10,7 @@ using Xamarin.Forms.Platform.iOS;
 [assembly: ExportRenderer(typeof(HybridWebPlatformView), typeof(HybridWebPlatformViewRenderer))]
 namespace HybridWebPlatform.iOS
 {
-	public class HybridWebPlatformViewRenderer : ViewRenderer<HybridWebPlatformView, WKWebView>, IWKScriptMessageHandler, IHybridWebPlatformActionSource
+	public class HybridWebPlatformViewRenderer : ViewRenderer<HybridWebPlatformView, WKWebView>, IWKScriptMessageHandler, IHybridWebPlatformViewRenderer
 	{
 		public event Func<Uri, bool> PageLoadRequest;
 		public event Action<Uri> PageLoadStarted;
@@ -126,7 +126,7 @@ namespace HybridWebPlatform.iOS
 
 			}
 
-			e.NewElement.SetWebActionSource(this);
+			e.NewElement.SetViewRenderer(this);
 		}
 
 		private void Inject(string script)

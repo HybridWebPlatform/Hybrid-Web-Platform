@@ -12,7 +12,7 @@ namespace HybridWebPlatform
 	public class HybridWebPlatformView : View
 	{
 		private string currentHash;
-		private IHybridWebPlatformActionSource actionSource;
+		private IHybridWebPlatformViewRenderer actionSource;
 		private TaskCompletionSource<bool> rendererLoadedSource;
 
 		private readonly IJsonSerializer jsonSerializer;
@@ -149,6 +149,8 @@ namespace HybridWebPlatform
 				{
 					while (this.IsLoading)
 					{
+						//Waiting for page to load before applying javascript
+						//Required for iOS (we can not navigate that contain #anchors in iOS)
 						Task.Delay(100).Wait();
 					}
 					LoadHashAnchor(hashResult);
@@ -195,7 +197,7 @@ namespace HybridWebPlatform
 			this.registeredFunctions.Clear();
 		}
 
-		public void SetWebActionSource(IHybridWebPlatformActionSource source)
+		internal void SetViewRenderer(IHybridWebPlatformViewRenderer source)
 		{
 			UnregisterOldWebActionSource();
 			this.actionSource = source;

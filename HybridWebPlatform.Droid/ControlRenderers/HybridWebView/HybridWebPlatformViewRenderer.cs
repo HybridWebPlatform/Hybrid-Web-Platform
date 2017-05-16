@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Android.Content;
 using Android.Views;
 using HybridWebPlatform;
@@ -10,7 +10,7 @@ using XLabs.Platform;
 [assembly: ExportRenderer(typeof(HybridWebPlatformView), typeof(HybridWebPlatformViewRenderer))]
 namespace HybridWebPlatform.Droid
 {
-	public class HybridWebPlatformViewRenderer : ViewRenderer<HybridWebPlatformView, HybridWebPlatformNativeView>, IHybridWebPlatformActionSource
+	public class HybridWebPlatformViewRenderer : ViewRenderer<HybridWebPlatformView, HybridWebPlatformNativeView>, IHybridWebPlatformViewRenderer
 	{
 		public static bool EnableHardwareRendering = false;
 		public static bool EnableAdditionalTouchGesturesHandling = true;
@@ -145,7 +145,7 @@ namespace HybridWebPlatform.Droid
 				webView.LayoutParameters = new LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent);
 			}
 
-			e.NewElement.SetWebActionSource(this);
+			e.NewElement.SetViewRenderer(this);
 
 		}
 

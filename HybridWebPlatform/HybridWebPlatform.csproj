@@ -30,7 +30,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Contracts\HybridJavascriptMessage.cs" />
-    <Compile Include="Control\IHybridWebPlatformActionSource.cs" />
+    <Compile Include="Control\IHybridWebPlatformViewRenderer.cs" />
     <Compile Include="Control\HybridWebPlatformView.cs" />
   </ItemGroup>
   <ItemGroup>

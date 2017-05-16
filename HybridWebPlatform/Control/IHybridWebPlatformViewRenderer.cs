@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace HybridWebPlatform
 {
-	public interface IHybridWebPlatformActionSource
+	internal interface IHybridWebPlatformViewRenderer
 	{
 		bool CanGoBack
 		{
