@@ -11,6 +11,10 @@ namespace HybridWebControl
 {
 	public class HybridWebView : View
 	{
+        public const string IsNativeAppCookieName = "is_native_app";
+        public const string IsNativeAppCookieValue = "true";
+        public const int NativeAppCookieExpiresInS = 365 * 24 * 60 * 60;
+
 		private string currentHash;
 		private IHybridWebViewActionSource actionSource;
 

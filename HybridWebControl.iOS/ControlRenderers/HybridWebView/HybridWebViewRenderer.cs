@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
@@ -30,6 +30,13 @@ namespace HybridWebControl.iOS
 
 		private const string NativeFuncCall = "window.webkit.messageHandlers.native.postMessage";
 		private const string NativeFunction = "function Native(action, data){window.webkit.messageHandlers.native.postMessage(JSON.stringify({ a: action, d: data }));}";
+        private const string SetCookieScript =
+            "function setCookie(name, value, expiresInS) { " +
+            " const expiresDate = new Date(Date.now() + expiresInS * 1000);" +
+            " document.cookie = name + '=' + value + ';' + 'expires = ' + expiresDate.toUTCString() + ';path=/;'" +
+            " }";
+        private readonly string CallSetCookieScript =
+            $"setCookie('{HybridWebView.IsNativeAppCookieName}', '{HybridWebView.IsNativeAppCookieValue}', {HybridWebView.NativeAppCookieExpiresInS});";
 
 		public bool CanGoBack
 		{
@@ -117,7 +124,13 @@ namespace HybridWebControl.iOS
 					UserContentController = userController
 				};
 
-				var script = new WKUserScript(new NSString(NativeFunction + HybridWebView.GetInitialJsScript(NativeFuncCall)), WKUserScriptInjectionTime.AtDocumentEnd, false);
+				var script = new WKUserScript(
+                    new NSString(
+                        NativeFunction + HybridWebView.GetInitialJsScript(NativeFuncCall) +
+                        SetCookieScript + CallSetCookieScript
+                        ),
+                    WKUserScriptInjectionTime.AtDocumentStart,
+                    isForMainFrameOnly: false);
 
 				userController.AddUserScript(script);
 
