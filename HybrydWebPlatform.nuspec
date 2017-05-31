@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>HybridWebPlatform</id>
+    <version>1.0.7-pre02</version>
+    <title>HybridWebPlatform</title>
+    <authors>olegv</authors>
+    <owners>mr-wheelkers, olegv</owners>
+    <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
+    <projectUrl>https://github.com/HybridWebPlatform/Hybrid-Web-Platform</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Full-fledged WebView as Xamarin.Forms plugin with cross-platform C# to JavaScript and JavaScript to C# calls support. Eventually invented for painless hybrid apps creation.</description>
+    <releaseNotes>Initial release</releaseNotes>
+    <copyright>Copyright 2017</copyright>
+    <tags>XamarinAndroid XamarinIOS Xamarin Android iOS HybridWebControl HybridWebView ExtendedWebView Javascript WebView</tags>
+    <dependencies>
+    <dependency id="XLabs.Core" version="2.3.0-pre05"/>
+    <dependency id="XLabs.IoC" version="2.3.0-pre05" />
+    <dependency id="XLabs.Serialization" version="2.3.0-pre05" />
+    <dependency id="XLabs.Platform" version="2.3.0-pre05" />
+  </dependencies>
+  </metadata>
+  <files>
+	<file src="HybridWebControl/bin/Release/HybridWebControl.dll" target="lib\portable-net45+win8+wpa81+monoandroid+MonoTouch+xamarinios10" />
+	<file src="HybridWebControl/bin/Release/HybridWebControl.dll" target="lib\monoandroid"/>
+	<file src="HybridWebControl.Droid/bin/Release/HybridWebControl.Droid.dll" target="lib\monoandroid" />
+	<file src="HybridWebControl/bin/Release/HybridWebControl.dll" target="lib\xamarinios10" />
+	<file src="HybridWebControl.iOS/bin/Release/HybridWebControl.iOS.dll" target="lib\xamarinios10" />
+    </files>
+</package>
