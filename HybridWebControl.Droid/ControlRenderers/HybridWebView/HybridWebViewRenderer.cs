@@ -87,8 +87,6 @@ namespace HybridWebControl.Droid
 
         public void LoadPage(Uri page)
         {
-            SetCookieToBrowser(page.Host);
-
 			this.Control.LoadUrl(page.AbsoluteUri);
 		}
 
@@ -126,6 +124,8 @@ namespace HybridWebControl.Droid
 
 			if (this.Control == null && e.NewElement != null)
 			{
+                SetCookieToBrowser(e.NewElement);
+
 				var webView = new WebPlatformNativeView(this, EnableAdditionalTouchGesturesHandling);
 
 				webView.Settings.JavaScriptEnabled = true;
@@ -173,7 +173,7 @@ namespace HybridWebControl.Droid
 			base.Dispose(disposing);
 		}
 
-        private void SetCookieToBrowser(string host)
+        private void SetCookieToBrowser(HybridWebView webView)
         {
 			var cookieManager = CookieManager.Instance;
 			cookieManager.SetAcceptCookie(true);
@@ -185,8 +185,8 @@ namespace HybridWebControl.Droid
 			// callback parameter now because it doesn't support in Android 4
 			// See details at https://developer.android.com/reference/android/webkit/CookieManager.html#setCookie(java.lang.String, java.lang.String, android.webkit.ValueCallback<java.lang.Boolean>)
 			cookieManager.SetCookie(
-				host,
-				$"{HybridWebView.IsNativeAppCookieName}={HybridWebView.IsNativeAppCookieValue}; Expires={expiresHttpDate}; Path=/; "
+                webView.FutureLoadedPageCookieHost,
+                $"{webView.FutureLoadedPageCookieName}={webView.FutureLoadedPageCookieValue}; Expires={expiresHttpDate}; Path=/; "
 			);
         }
 

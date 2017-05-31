@@ -35,8 +35,6 @@ namespace HybridWebControl.iOS
             " const expiresDate = new Date(Date.now() + expiresInS * 1000);" +
             " document.cookie = name + '=' + value + ';' + 'expires = ' + expiresDate.toUTCString() + ';path=/;'" +
             " }";
-        private readonly string CallSetCookieScript =
-            $"setCookie('{HybridWebView.IsNativeAppCookieName}', '{HybridWebView.IsNativeAppCookieValue}', {HybridWebView.NativeAppCookieExpiresInS});";
 
 		public bool CanGoBack
 		{
@@ -117,6 +115,10 @@ namespace HybridWebControl.iOS
 
 			if (Control == null && e.NewElement != null)
 			{
+                HybridWebView hybridWebView = e.NewElement;
+				string callSetCookieScript =
+					$"setCookie('{hybridWebView.FutureLoadedPageCookieName}', '{hybridWebView.FutureLoadedPageCookieValue}', {HybridWebView.NativeAppCookieExpiresInS});";
+                
 				userController = new WKUserContentController();
 
 				var config = new WKWebViewConfiguration()
@@ -127,8 +129,8 @@ namespace HybridWebControl.iOS
 				var script = new WKUserScript(
                     new NSString(
                         NativeFunction + HybridWebView.GetInitialJsScript(NativeFuncCall) +
-                        SetCookieScript + CallSetCookieScript
-                        ),
+                        SetCookieScript + callSetCookieScript
+                    ),
                     WKUserScriptInjectionTime.AtDocumentStart,
                     isForMainFrameOnly: false);
 

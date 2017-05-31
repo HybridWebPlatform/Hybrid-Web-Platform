@@ -11,8 +11,6 @@ namespace HybridWebControl
 {
 	public class HybridWebView : View
 	{
-        public const string IsNativeAppCookieName = "is_native_app";
-        public const string IsNativeAppCookieValue = "true";
         public const int NativeAppCookieExpiresInS = 365 * 24 * 60 * 60;
 
 		private string currentHash;
@@ -34,6 +32,10 @@ namespace HybridWebControl
 			this.registeredFunctions = new Dictionary<string, Func<string, object[]>>();
 			RegisterHybridInternalJavascriptCallbacks();
 		}
+
+		public string FutureLoadedPageCookieHost { get; private set; }
+		public string FutureLoadedPageCookieName { get; private set; }
+		public string FutureLoadedPageCookieValue { get; private set; }
 
 		public bool CanGoBack
 		{
@@ -201,6 +203,13 @@ namespace HybridWebControl
 			this.actionSource.PageLoadError += this.PageLoadErrorHandler;
 			this.actionSource.PageLoadInNewWindowRequest += this.NewWebBrowserWindowOpenRequestHandler;
 		}
+
+        public void SetCookie(string host, string name, string value)
+        {
+            FutureLoadedPageCookieHost = host;
+            FutureLoadedPageCookieName = name;
+            FutureLoadedPageCookieValue = value;
+        }
 
 		internal bool TryGetAction(string name, out Action<string> action)
 		{
