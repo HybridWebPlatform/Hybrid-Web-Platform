@@ -337,6 +337,10 @@ namespace HybridWebControl
 			{
 				NewWebBrowserWindowOpenRequest(uri);
 			}
+			else
+			{
+				Device.OpenUri(uri);
+			}
 		}
 	}
 }
