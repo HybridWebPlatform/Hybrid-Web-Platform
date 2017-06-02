@@ -277,10 +277,19 @@ namespace HybridWebControl.Droid
 
 				return true;
 			}
-
-			if (string.Equals(uri.Scheme, "tel", StringComparison.OrdinalIgnoreCase))
+			else if (string.Equals(uri.Scheme, "tel", StringComparison.OrdinalIgnoreCase))
 			{
 				Intent i = new Intent(Intent.ActionDial, Android.Net.Uri.Parse(uri.AbsoluteUri));
+
+				i.AddFlags(ActivityFlags.NewTask);
+
+				this.Control.StartActivity(i);
+
+				return true;
+			}
+			else if (string.Equals(uri.Scheme, "sms", StringComparison.OrdinalIgnoreCase))
+			{
+				Intent i = new Intent(Intent.ActionSendto, Android.Net.Uri.Parse(uri.AbsoluteUri));
 
 				i.AddFlags(ActivityFlags.NewTask);
 
