@@ -175,19 +175,22 @@ namespace HybridWebControl.Droid
 
         private void SetCookieToBrowser(HybridWebView webView)
         {
+            if (!webView.IsCookieSetRequested)
+                return;
+
 			var cookieManager = CookieManager.Instance;
 			cookieManager.SetAcceptCookie(true);
 
 			DateTime expiresDate = DateTime.UtcNow.AddSeconds(HybridWebView.NativeAppCookieExpiresInS);
 			string expiresHttpDate = expiresDate.ToString("r");
 
-			// TODO: Warning! SetCookie is async, but it's impossible to use 
-			// callback parameter now because it doesn't support in Android 4
-			// See details at https://developer.android.com/reference/android/webkit/CookieManager.html#setCookie(java.lang.String, java.lang.String, android.webkit.ValueCallback<java.lang.Boolean>)
-			cookieManager.SetCookie(
+            // TODO: Warning! SetCookie is async, but it's impossible to use 
+            // callback parameter now because it doesn't support in Android 4
+            // See details at https://developer.android.com/reference/android/webkit/CookieManager.html#setCookie(java.lang.String, java.lang.String, android.webkit.ValueCallback<java.lang.Boolean>)
+            cookieManager.SetCookie(
                 webView.FutureLoadedPageCookieHost,
                 $"{webView.FutureLoadedPageCookieName}={webView.FutureLoadedPageCookieValue}; Expires={expiresHttpDate}; Path=/; "
-			);
+            );
         }
 
 		private void Inject(string script)

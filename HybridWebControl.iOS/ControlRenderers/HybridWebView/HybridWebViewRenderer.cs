@@ -115,9 +115,16 @@ namespace HybridWebControl.iOS
 
 			if (Control == null && e.NewElement != null)
 			{
+                string initialJavaScript = NativeFunction + HybridWebView.GetInitialJsScript(NativeFuncCall);
+
                 HybridWebView hybridWebView = e.NewElement;
-				string callSetCookieScript =
-					$"setCookie('{hybridWebView.FutureLoadedPageCookieName}', '{hybridWebView.FutureLoadedPageCookieValue}', {HybridWebView.NativeAppCookieExpiresInS});";
+                if (hybridWebView.IsCookieSetRequested)
+                {
+                    string callSetCookieScript =
+                        $"setCookie('{hybridWebView.FutureLoadedPageCookieName}', '{hybridWebView.FutureLoadedPageCookieValue}', {HybridWebView.NativeAppCookieExpiresInS});";
+
+                    initialJavaScript += SetCookieScript + callSetCookieScript;
+                }
                 
 				userController = new WKUserContentController();
 
@@ -126,16 +133,11 @@ namespace HybridWebControl.iOS
 					UserContentController = userController
 				};
 
-				var script = new WKUserScript(
-                    new NSString(
-                        NativeFunction + HybridWebView.GetInitialJsScript(NativeFuncCall) +
-                        SetCookieScript + callSetCookieScript
-                    ),
+				var script = new WKUserScript(new NSString(initialJavaScript),
                     WKUserScriptInjectionTime.AtDocumentStart,
                     isForMainFrameOnly: false);
-
+                
 				userController.AddUserScript(script);
-
 				userController.AddScriptMessageHandler(this, "native");
 
 				var webView = new WKWebView(Frame, config) { NavigationDelegate = CreateNavidationalDelagate() };

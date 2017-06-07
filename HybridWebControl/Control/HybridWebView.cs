@@ -33,9 +33,17 @@ namespace HybridWebControl
 			RegisterHybridInternalJavascriptCallbacks();
 		}
 
-		public string FutureLoadedPageCookieHost { get; private set; }
-		public string FutureLoadedPageCookieName { get; private set; }
-		public string FutureLoadedPageCookieValue { get; private set; }
+        public string FutureLoadedPageCookieHost { get; private set; } = null;
+		public string FutureLoadedPageCookieName { get; private set; } = null;
+		public string FutureLoadedPageCookieValue { get; private set; } = null;
+
+        public bool IsCookieSetRequested
+        {
+            get
+            {
+                return this.FutureLoadedPageCookieName != null;
+            }
+        }
 
 		public bool CanGoBack
 		{
@@ -77,9 +85,9 @@ namespace HybridWebControl
 			}
 		}
 
-		//Required browser actions
+        //Required browser actions
 
-		public event Func<Uri, bool> PageLoadRequest;
+        public event Func<Uri, bool> PageLoadRequest;
 		public event Action<Uri> PageLoadStarted;
 		public event Action<Uri> PageLoadFinished;
 		public event Action<Uri, string, int> PageLoadError;
