@@ -1,4 +1,4 @@
-﻿﻿﻿using System;
+﻿﻿﻿﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
@@ -180,48 +180,48 @@ namespace HybridWebControl.iOS
 			return navigationDelegate;
 		}
 
-		private void NavigationDelegate_ReceivedError(string arg1, string arg2, int arg3)
+        private void NavigationDelegate_ReceivedError(string url, string description, int errorCode)
 		{
 			UIApplication.SharedApplication.NetworkActivityIndicatorVisible = false;
 			if (PageLoadError != null)
 			{
-				this.PageLoadError(new Uri(arg1), arg2, arg3);
+                this.PageLoadError(string.IsNullOrEmpty(url) ? null : new Uri(url), description, errorCode);
 			}
 		}
 
-		private void NavigationDelegate_FinishedLoadingUrl(string obj)
+		private void NavigationDelegate_FinishedLoadingUrl(string url)
 		{
 			UIApplication.SharedApplication.NetworkActivityIndicatorVisible = false;
 			if (PageLoadFinished != null)
 			{
-				this.PageLoadFinished(new Uri(obj));
+				this.PageLoadFinished(new Uri(url));
 			}
 		}
 
-		private void NavigationDelegate_StartLoadingUrl(string obj)
+		private void NavigationDelegate_StartLoadingUrl(string url)
 		{
 			UIApplication.SharedApplication.NetworkActivityIndicatorVisible = true;
 			if (PageLoadStarted != null)
 			{
-				this.PageLoadStarted(new Uri(obj));
+				this.PageLoadStarted(new Uri(url));
 			}
 		}
 
-		private bool NavigationDelegate_ShouldStartPageLoading(string arg)
+		private bool NavigationDelegate_ShouldStartPageLoading(string url)
 		{
 			if (PageLoadRequest != null)
 			{
-				return this.PageLoadRequest(new Uri(arg));
+				return this.PageLoadRequest(new Uri(url));
 			}
 			return true;
 		}
 
-		private void NavigationDelegate_OpenExternalWindow(Uri obj)
+		private void NavigationDelegate_OpenExternalWindow(Uri url)
 		{
 			UIApplication.SharedApplication.NetworkActivityIndicatorVisible = false;
 			if (PageLoadInNewWindowRequest != null)
 			{
-				this.PageLoadInNewWindowRequest(obj);
+				this.PageLoadInNewWindowRequest(url);
 			}
 		}
 	}
