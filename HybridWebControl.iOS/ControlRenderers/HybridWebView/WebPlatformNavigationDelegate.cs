@@ -1,5 +1,6 @@
 ﻿using System;
 using Foundation;
+using UIKit;
 using WebKit;
 
 namespace HybridWebPlatform.iOS
@@ -91,25 +92,39 @@ namespace HybridWebPlatform.iOS
 
 		public override void DidFailProvisionalNavigation(WKWebView webView, WKNavigation navigation, NSError error)
 		{
-			if (ReceivedError != null)
-			{
-				string description = "";
-				int errorCode = 0;
-				string url = "";
+            string failingUrlString = error.UserInfo["NSErrorFailingURLStringKey"].ToString();
+            NSUrl failingUrl = new NSUrl(failingUrlString);
+            if (string.Equals(failingUrl.Scheme, "mailto", StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(failingUrl.Scheme, "tel", StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(failingUrl.Scheme, "sms", StringComparison.OrdinalIgnoreCase))
+            {
+                if (UIApplication.SharedApplication.CanOpenUrl(failingUrl))
+                {
+                    UIApplication.SharedApplication.OpenUrl(failingUrl);
+                }
+            }
+            else
+            {
+                if (ReceivedError != null)
+                {
+                    string description = "";
+                    int errorCode = 0;
+                    string url = "";
 
-				if (error != null)
-				{
-					description = error.Description;
-					errorCode = (int)error.Code;
-				}
+                    if (error != null)
+                    {
+                        description = error.Description;
+                        errorCode = (int)error.Code;
+                    }
 
-				if (webView.Url != null)
-				{
-					url = webView.Url.AbsoluteString;
-				}
+                    if (webView.Url != null)
+                    {
+                        url = webView.Url.AbsoluteString;
+                    }
 
-				ReceivedError(url, description, errorCode);
-			}
+                    ReceivedError(url, description, errorCode);
+                }
+            }
 		}
 	}
 }
