@@ -19,21 +19,36 @@ namespace HybridWebPlatform.iOS
 
 		public override void DecidePolicy(WKWebView webView, WKNavigationAction navigationAction, Action<WKNavigationActionPolicy> decisionHandler)
 		{
-			var action = WKNavigationActionPolicy.Allow;
+            var action = WKNavigationActionPolicy.Allow;
 
-			if (navigationAction.TargetFrame == null)
+			NSUrl url = navigationAction.Request.Url;
+			if (string.Equals(url.Scheme, "mailto", StringComparison.OrdinalIgnoreCase) ||
+			    string.Equals(url.Scheme, "tel", StringComparison.OrdinalIgnoreCase) ||
+			    string.Equals(url.Scheme, "sms", StringComparison.OrdinalIgnoreCase))
 			{
-				if (OpenExternalWindow != null)
+				if (UIApplication.SharedApplication.CanOpenUrl(url))
 				{
-					OpenExternalWindow(new Uri(navigationAction.Request.Url.AbsoluteString));
-				}
-				decisionHandler(WKNavigationActionPolicy.Cancel);
-			}
+					UIApplication.SharedApplication.OpenUrl(url);
 
-			if (ShouldStartPageLoading != null)
-			{
-				action = ShouldStartPageLoading(navigationAction.Request.Url.AbsoluteString) ? WKNavigationActionPolicy.Allow : WKNavigationActionPolicy.Cancel;
+                    action = WKNavigationActionPolicy.Cancel;
+				}
 			}
+            else
+            {
+				if (navigationAction.TargetFrame == null)
+				{
+					if (OpenExternalWindow != null)
+					{
+						OpenExternalWindow(new Uri(navigationAction.Request.Url.AbsoluteString));
+					}
+					decisionHandler(WKNavigationActionPolicy.Cancel);
+				}
+				
+				if (ShouldStartPageLoading != null)
+				{
+					action = ShouldStartPageLoading(navigationAction.Request.Url.AbsoluteString) ? WKNavigationActionPolicy.Allow : WKNavigationActionPolicy.Cancel;
+				}
+            }
 
 			decisionHandler(action);
 		}
@@ -92,38 +107,24 @@ namespace HybridWebPlatform.iOS
 
 		public override void DidFailProvisionalNavigation(WKWebView webView, WKNavigation navigation, NSError error)
 		{
-            string failingUrlString = error.UserInfo["NSErrorFailingURLStringKey"].ToString();
-            NSUrl failingUrl = new NSUrl(failingUrlString);
-            if (string.Equals(failingUrl.Scheme, "mailto", StringComparison.OrdinalIgnoreCase) ||
-                string.Equals(failingUrl.Scheme, "tel", StringComparison.OrdinalIgnoreCase) ||
-                string.Equals(failingUrl.Scheme, "sms", StringComparison.OrdinalIgnoreCase))
+            if (ReceivedError != null)
             {
-                if (UIApplication.SharedApplication.CanOpenUrl(failingUrl))
+                string description = "";
+                int errorCode = 0;
+                string url = "";
+
+                if (error != null)
                 {
-                    UIApplication.SharedApplication.OpenUrl(failingUrl);
+                    description = error.Description;
+                    errorCode = (int)error.Code;
                 }
-            }
-            else
-            {
-                if (ReceivedError != null)
+
+                if (webView.Url != null)
                 {
-                    string description = "";
-                    int errorCode = 0;
-                    string url = "";
-
-                    if (error != null)
-                    {
-                        description = error.Description;
-                        errorCode = (int)error.Code;
-                    }
-
-                    if (webView.Url != null)
-                    {
-                        url = webView.Url.AbsoluteString;
-                    }
-
-                    ReceivedError(url, description, errorCode);
+                    url = webView.Url.AbsoluteString;
                 }
+
+                ReceivedError(url, description, errorCode);
             }
 		}
 	}
