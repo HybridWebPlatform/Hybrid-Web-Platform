@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Text;
 using System.Text.RegularExpressions;
 using Android.Content;
@@ -124,9 +124,9 @@ namespace HybridWebControl.Droid
 
 			if (this.Control == null && e.NewElement != null)
 			{
-                SetCookieToBrowser(e.NewElement);
-
 				var webView = new WebPlatformNativeView(this, EnableAdditionalTouchGesturesHandling);
+
+                SetCookieToBrowser(e.NewElement);
 
 				webView.Settings.JavaScriptEnabled = true;
 				webView.Settings.DomStorageEnabled = true;
