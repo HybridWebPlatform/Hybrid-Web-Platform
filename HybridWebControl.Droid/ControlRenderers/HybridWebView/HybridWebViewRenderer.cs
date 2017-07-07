@@ -15,13 +15,13 @@ using System.Threading;
 using HybridWebControl.Droid;
 using HybridWebControl;
 using XLabs.Platform;
+using Android.OS;
 
 [assembly: ExportRenderer(typeof(HybridWebView), typeof(HybridWebViewRenderer))]
 namespace HybridWebControl.Droid
 {
 	public class HybridWebViewRenderer : ViewRenderer<HybridWebView, WebPlatformNativeView>, IHybridWebViewActionSource
 	{
-		public static bool EnableHardwareRendering = false;
 		public static bool EnableAdditionalTouchGesturesHandling = true;
 
 		public static Func<HybridWebViewRenderer, WebPlatformViewClient> GetWebViewClientDelegate;
@@ -130,8 +130,18 @@ namespace HybridWebControl.Droid
 
 				webView.Settings.JavaScriptEnabled = true;
 				webView.Settings.DomStorageEnabled = true;
-				webView.SetLayerType(EnableHardwareRendering ? LayerType.Hardware : LayerType.Software, null);
-				webView.SetBackgroundColor(Color.Transparent.ToAndroid());
+				webView.SetLayerType(LayerType.Hardware, null);
+				// HACK: Fix blinking on Android 4 with hardware acceleration
+                // see details at https://stackoverflow.com/questions/9476151/webview-flashing-with-white-background-if-hardware-acceleration-is-enabled-an
+				bool isSupportHardwareRenderingAndNotBlink = Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop;
+                if (isSupportHardwareRenderingAndNotBlink)
+                {
+					webView.SetBackgroundColor(Color.Transparent.ToAndroid());
+				}
+                else
+                {
+                    webView.SetBackgroundColor(Color.FromRgba(0, 0, 0, 1).ToAndroid());
+                }
 
 				this.viewClient = this.CreateWebClient();
 
