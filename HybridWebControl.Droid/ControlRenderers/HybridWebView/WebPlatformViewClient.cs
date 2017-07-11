@@ -64,5 +64,14 @@ namespace HybridWebControl.Droid
 				FinishedLoadingUrl(url);
 			}
 		}
+
+        public override void OnScaleChanged(WebView view, float oldScale, float newScale)
+        {
+            base.OnScaleChanged(view, oldScale, newScale);
+			if (view != null)
+			{
+                view.Invalidate();
+			}
+        }
 	}
 }

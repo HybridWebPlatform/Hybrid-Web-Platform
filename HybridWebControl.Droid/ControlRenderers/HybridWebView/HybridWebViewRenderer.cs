@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿﻿﻿using System;
 using System.Text;
 using System.Text.RegularExpressions;
 using Android.Content;
@@ -130,17 +130,18 @@ namespace HybridWebControl.Droid
 
 				webView.Settings.JavaScriptEnabled = true;
 				webView.Settings.DomStorageEnabled = true;
+				webView.Settings.SetRenderPriority(WebSettings.RenderPriority.High);
 				webView.SetLayerType(LayerType.Hardware, null);
 				// HACK: Fix blinking on Android 4 with hardware acceleration
                 // see details at https://stackoverflow.com/questions/9476151/webview-flashing-with-white-background-if-hardware-acceleration-is-enabled-an
 				bool isSupportHardwareRenderingAndNotBlink = Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop;
                 if (isSupportHardwareRenderingAndNotBlink)
                 {
-					webView.SetBackgroundColor(Color.Transparent.ToAndroid());
+                    webView.SetBackgroundColor(Android.Graphics.Color.Transparent);
 				}
                 else
                 {
-                    webView.SetBackgroundColor(Color.FromRgba(0, 0, 0, 1).ToAndroid());
+                    webView.SetBackgroundColor(Android.Graphics.Color.Argb(1, 0, 0, 0));
                 }
 
 				this.viewClient = this.CreateWebClient();
