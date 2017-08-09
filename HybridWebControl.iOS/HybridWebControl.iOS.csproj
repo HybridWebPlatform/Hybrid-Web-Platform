@@ -84,6 +84,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ControlRenderers\HybridWebView\HybridWebViewRenderer.cs" />
     <Compile Include="ControlRenderers\HybridWebView\WebPlatformNavigationDelegate.cs" />
+    <Compile Include="ControlRenderers\HybridWebView\WebPlatformUIDelegate.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

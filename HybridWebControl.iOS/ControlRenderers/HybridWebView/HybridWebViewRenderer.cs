@@ -140,7 +140,9 @@ namespace HybridWebControl.iOS
 				userController.AddUserScript(script);
 				userController.AddScriptMessageHandler(this, "native");
 
-				var webView = new WKWebView(Frame, config) { NavigationDelegate = CreateNavidationalDelagate() };
+                var webView = new WKWebView(Frame, config) { 
+                    NavigationDelegate = CreateNavidationalDelagate(), 
+                    UIDelegate = CreateUIDelagate() };
 
 				webView.Opaque = false;
 
@@ -178,6 +180,13 @@ namespace HybridWebControl.iOS
 			navigationDelegate.OpenExternalWindow += NavigationDelegate_OpenExternalWindow;
 
 			return navigationDelegate;
+		}
+
+		private WebPlatformUIDelegate CreateUIDelagate()
+		{
+			var uiDelegate = new WebPlatformUIDelegate();
+
+			return uiDelegate;
 		}
 
         private void NavigationDelegate_ReceivedError(string url, string description, int errorCode)
