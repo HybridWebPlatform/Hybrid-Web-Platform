@@ -85,6 +85,19 @@ namespace HybridWebControl
 			}
 		}
 
+        public string UserAgent 
+        {
+            get
+            {
+                return actionSource.UserAgent;
+            }
+            set
+            {
+                actionSource.UserAgent = value;
+            }
+            
+        }
+
         //Required browser actions
 
         public event Func<Uri, bool> PageLoadRequest;
@@ -217,6 +230,14 @@ namespace HybridWebControl
             FutureLoadedPageCookieHost = host;
             FutureLoadedPageCookieName = name;
             FutureLoadedPageCookieValue = value;
+        }
+
+        public void BehaveLikeNativeBrowser(bool shouldBeNative)
+        {
+			if (shouldBeNative)
+			{
+				UserAgent = UserAgent.ConvertToNativeBrowser();
+			}
         }
 
 		internal bool TryGetAction(string name, out Action<string> action)

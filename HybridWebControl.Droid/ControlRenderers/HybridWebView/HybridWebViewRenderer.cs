@@ -34,7 +34,7 @@ namespace HybridWebControl.Droid
 		public event Action<string> JavascriptExecuted;
 		public event Action<Uri> PageLoadInNewWindowRequest;
 
-		private WebPlatformViewClient viewClient;
+        private WebPlatformViewClient viewClient;
 		private const string NativeFuncCall = "Xamarin.call";
 		private const string NativeFunction = "function Native(action, data){Xamarin.call(JSON.stringify({ a: action, d: data }));}";
 
@@ -70,7 +70,19 @@ namespace HybridWebControl.Droid
 			}
 		}
 
-		public void GoBack()
+        public string UserAgent 
+        { 
+            get
+            {
+                return this.Control.Settings.UserAgentString;
+            }
+            set
+            {
+                this.Control.Settings.UserAgentString = value;
+            }
+        }
+
+        public void GoBack()
 		{
 			this.Control.GoBack();
 		}
@@ -313,5 +325,5 @@ namespace HybridWebControl.Droid
 
 			return false;
 		}
-	}
+    }
 }

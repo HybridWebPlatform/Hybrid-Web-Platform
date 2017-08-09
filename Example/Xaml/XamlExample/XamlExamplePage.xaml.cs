@@ -17,6 +17,7 @@ namespace XamlExample
 		protected override void OnAppearing()
 		{
 			base.OnAppearing();
+            WebView.BehaveLikeNativeBrowser(false);
             WebView.LoadPage(new System.Uri(Host));
 		}
 	}

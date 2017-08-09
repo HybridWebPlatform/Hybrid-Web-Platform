@@ -68,6 +68,18 @@ namespace HybridWebControl.iOS
 			}
 		}
 
+		public string UserAgent
+		{
+			get
+			{
+                return this.Control.CustomUserAgent;
+			}
+			set
+			{
+				this.Control.CustomUserAgent = value;
+			}
+		}
+
 		public override SizeRequest GetDesiredSize(double widthConstraint, double heightConstraint)
 		{
 			return new SizeRequest(Size.Zero, Size.Zero);
@@ -224,5 +236,5 @@ namespace HybridWebControl.iOS
 				this.PageLoadInNewWindowRequest(url);
 			}
 		}
-	}
+    }
 }
