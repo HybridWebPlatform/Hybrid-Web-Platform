@@ -25,6 +25,12 @@ namespace HybridWebControl
 			get;
 		}
 
+		string UserAgent
+		{
+            get;
+            set;
+		}
+
 		event Func<Uri, bool> PageLoadRequest;
 		event Action<Uri> PageLoadStarted;
 		event Action<Uri> PageLoadFinished;

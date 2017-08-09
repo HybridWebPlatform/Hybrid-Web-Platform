@@ -1,4 +1,5 @@
-﻿﻿using Xamarin.Forms;
+﻿using HybridWebControl;
+using Xamarin.Forms;
 
 namespace XamlExample
 {
@@ -17,6 +18,7 @@ namespace XamlExample
 		protected override void OnAppearing()
 		{
 			base.OnAppearing();
+            WebView.UserAgent = WebView.UserAgent.ConvertUserAgentToNativeBrowser();
             WebView.LoadPage(new System.Uri(Host));
 		}
 	}
