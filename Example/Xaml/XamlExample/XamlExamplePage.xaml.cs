@@ -4,7 +4,7 @@ namespace XamlExample
 {
 	public partial class XamlExamplePage : ContentPage
 	{
-        const string Host = "https://mobile.bet.pt/";
+        const string Host = "http://google.com/";
 
 		public XamlExamplePage()
 		{

@@ -134,15 +134,15 @@ namespace HybridWebControl.iOS
 				};
 
 				var script = new WKUserScript(new NSString(initialJavaScript),
-                    WKUserScriptInjectionTime.AtDocumentStart,
-                    isForMainFrameOnly: false);
+					WKUserScriptInjectionTime.AtDocumentStart,
+					isForMainFrameOnly: false);
                 
 				userController.AddUserScript(script);
 				userController.AddScriptMessageHandler(this, "native");
 
-                var webView = new WKWebView(Frame, config) { 
-                    NavigationDelegate = CreateNavidationalDelagate(), 
-                    UIDelegate = CreateUIDelagate() };
+				var webView = new WKWebView(Frame, config) {
+					NavigationDelegate = CreateNavidationalDelagate(),
+					UIDelegate = CreateUIDelagate() };
 
 				webView.Opaque = false;
 
