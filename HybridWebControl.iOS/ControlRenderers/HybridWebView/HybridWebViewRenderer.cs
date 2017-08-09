@@ -134,13 +134,15 @@ namespace HybridWebControl.iOS
 				};
 
 				var script = new WKUserScript(new NSString(initialJavaScript),
-                    WKUserScriptInjectionTime.AtDocumentStart,
-                    isForMainFrameOnly: false);
+					WKUserScriptInjectionTime.AtDocumentStart,
+					isForMainFrameOnly: false);
                 
 				userController.AddUserScript(script);
 				userController.AddScriptMessageHandler(this, "native");
 
-				var webView = new WKWebView(Frame, config) { NavigationDelegate = CreateNavidationalDelagate() };
+				var webView = new WKWebView(Frame, config) {
+					NavigationDelegate = CreateNavidationalDelagate(),
+					UIDelegate = CreateUIDelagate() };
 
 				webView.Opaque = false;
 
@@ -178,6 +180,15 @@ namespace HybridWebControl.iOS
 			navigationDelegate.OpenExternalWindow += NavigationDelegate_OpenExternalWindow;
 
 			return navigationDelegate;
+		}
+
+		private WebPlatformUIDelegate CreateUIDelagate()
+		{
+			var uiDelegate = new WebPlatformUIDelegate();
+
+            uiDelegate.OpenExternalWindow += NavigationDelegate_OpenExternalWindow;
+
+			return uiDelegate;
 		}
 
         private void NavigationDelegate_ReceivedError(string url, string description, int errorCode)
