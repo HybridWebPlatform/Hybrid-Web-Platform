@@ -186,6 +186,8 @@ namespace HybridWebControl.iOS
 		{
 			var uiDelegate = new WebPlatformUIDelegate();
 
+            uiDelegate.OpenExternalWindow += NavigationDelegate_OpenExternalWindow;
+
 			return uiDelegate;
 		}
 
