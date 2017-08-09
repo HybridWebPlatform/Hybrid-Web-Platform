@@ -232,14 +232,6 @@ namespace HybridWebControl
             FutureLoadedPageCookieValue = value;
         }
 
-        public void BehaveLikeNativeBrowser(bool shouldBeNative)
-        {
-			if (shouldBeNative)
-			{
-				UserAgent = UserAgent.ConvertToNativeBrowser();
-			}
-        }
-
 		internal bool TryGetAction(string name, out Action<string> action)
 		{
 			return this.registeredActions.TryGetValue(name, out action);

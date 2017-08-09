@@ -6,7 +6,7 @@ namespace HybridWebControl
 {
     public static class UserAgentParser
     {
-        public static string ConvertToNativeBrowser(this String userAgent)
+        public static string ConvertUserAgentToNativeBrowser(this String userAgent)
         {
 			var userAgentParams = new List<string>(userAgent.Split(new char[] { ' ' }));
 
