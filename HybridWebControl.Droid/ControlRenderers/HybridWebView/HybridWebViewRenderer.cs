@@ -143,14 +143,14 @@ namespace HybridWebControl.Droid
 				webView.Settings.JavaScriptEnabled = true;
 				webView.Settings.DomStorageEnabled = true;
 				bool isSupportHardwareRendering = Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop;
-                if (isSupportHardwareRendering)
-                {
-                    webView.SetLayerType(LayerType.Hardware, null);
+				if (isSupportHardwareRendering)
+				{
+					webView.SetLayerType(LayerType.Hardware, null);
 				}
-                else
-                {
-                    webView.SetLayerType(LayerType.Software, null);
-                }
+				else
+				{
+					webView.SetLayerType(LayerType.Software, null);
+				}
 
 				this.viewClient = this.CreateWebClient();
 
