@@ -17,7 +17,8 @@ namespace HybridWebPlatform.iOS
                     OpenExternalWindow(new Uri(navigationAction.Request.Url.AbsoluteString));
                 }
             }
-            return null;
+
+            return new WKWebView(new CoreGraphics.CGRect(0, 0, 0, 0), configuration);
         }
     }
 }
