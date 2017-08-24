@@ -14,8 +14,8 @@ namespace HybridWebControl
         public const int NativeAppCookieExpiresInS = 365 * 24 * 60 * 60;
 
 		private string currentHash;
-        private string newHash;
-        private IHybridWebViewActionSource actionSource;
+		private string newHash;
+		private IHybridWebViewActionSource actionSource;
 
 		private readonly IJsonSerializer jsonSerializer;
 		private readonly Dictionary<string, Action<string>> registeredActions;
@@ -327,11 +327,11 @@ namespace HybridWebControl
 
 		private void PageLoadFinishedHandler(Uri uri)
 		{
-            if (!String.IsNullOrEmpty(newHash))
-            {
-                LoadHashAnchor(newHash);
-                newHash = null;
-            }
+			if (!String.IsNullOrEmpty(newHash))
+			{
+				LoadHashAnchor(newHash);
+				newHash = null;
+			}
 
 			if (PageLoadFinished != null)
 			{
