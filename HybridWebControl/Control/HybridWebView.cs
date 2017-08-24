@@ -14,6 +14,7 @@ namespace HybridWebControl
         public const int NativeAppCookieExpiresInS = 365 * 24 * 60 * 60;
 
 		private string currentHash;
+		private string newHash;
 		private IHybridWebViewActionSource actionSource;
 
 		private readonly IJsonSerializer jsonSerializer;
@@ -149,7 +150,7 @@ namespace HybridWebControl
 		public void LoadPage(Uri page)
 		{
 			string actualLink = page.AbsoluteUri;
-			string hashResult = null;
+			newHash = null;
 
 			if (page.AbsoluteUri.Contains("#"))
 			{
@@ -157,22 +158,10 @@ namespace HybridWebControl
 
 				actualLink = page.AbsoluteUri.Substring(0, firstHashPosition);
 
-				hashResult = page.AbsoluteUri.Substring(firstHashPosition);
+				newHash = page.AbsoluteUri.Substring(firstHashPosition);
 			}
 
 			actionSource.LoadPage(new Uri(actualLink));
-
-			if (!string.IsNullOrEmpty(hashResult))
-			{
-				Task.Factory.StartNew(() =>
-				{
-					while (this.IsLoading)
-					{
-						Task.Delay(100).Wait();
-					}
-					LoadHashAnchor(hashResult);
-				});
-			}
 		}
 
 		public void LoadHashAnchor(string anchor)
@@ -338,6 +327,12 @@ namespace HybridWebControl
 
 		private void PageLoadFinishedHandler(Uri uri)
 		{
+			if (!String.IsNullOrEmpty(newHash))
+			{
+				LoadHashAnchor(newHash);
+				newHash = null;
+			}
+
 			if (PageLoadFinished != null)
 			{
 				PageLoadFinished(uri);
