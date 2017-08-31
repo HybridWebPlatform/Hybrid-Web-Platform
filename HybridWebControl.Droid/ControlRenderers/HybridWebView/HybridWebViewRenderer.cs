@@ -146,6 +146,7 @@ namespace HybridWebControl.Droid
 				if (isSupportHardwareRendering)
 				{
 					webView.SetLayerType(LayerType.Hardware, null);
+					webView.SetBackgroundColor(Color.Transparent.ToAndroid());
 				}
 				else
 				{
