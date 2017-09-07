@@ -56,6 +56,11 @@ namespace HybridWebControl.iOS
 		{
 			get
 			{
+                if (this.Control.Url == null)
+                {
+                    return "";
+                }
+
 				return this.Control.Url.AbsoluteString;
 			}
 		}
