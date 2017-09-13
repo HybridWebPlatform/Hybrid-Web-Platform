@@ -24,7 +24,8 @@ namespace HybridWebPlatform.iOS
 			NSUrl url = navigationAction.Request.Url;
 			if (string.Equals(url.Scheme, "mailto", StringComparison.OrdinalIgnoreCase) ||
 			    string.Equals(url.Scheme, "tel", StringComparison.OrdinalIgnoreCase) ||
-			    string.Equals(url.Scheme, "sms", StringComparison.OrdinalIgnoreCase))
+			    string.Equals(url.Scheme, "callto", StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(url.Scheme, "sms", StringComparison.OrdinalIgnoreCase))
 			{
 				if (UIApplication.SharedApplication.CanOpenUrl(url))
 				{
