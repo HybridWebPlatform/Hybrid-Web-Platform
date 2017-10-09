@@ -42,7 +42,7 @@ namespace HybridWebPlatform.iOS
 					{
 						OpenExternalWindow(new Uri(navigationAction.Request.Url.AbsoluteString));
 					}
-					decisionHandler(WKNavigationActionPolicy.Cancel);
+                    action = WKNavigationActionPolicy.Cancel;
 				}
 				
 				if (ShouldStartPageLoading != null)
