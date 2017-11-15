@@ -107,6 +107,7 @@ namespace HybridWebControl
 		public event Action<Uri, string, int> PageLoadError;
 		public event Action<Uri> NewWebBrowserWindowOpenRequest;
         public event Func<Uri, bool> ShouldLoadInNewWindowRequest;
+        public event Action DidCloseExternalWebViewWindow;
 		//Required Js actions
 
 		public event Action<string> HashAnchorChanged;
@@ -213,6 +214,7 @@ namespace HybridWebControl
 			this.actionSource.PageLoadError += this.PageLoadErrorHandler;
 			this.actionSource.PageLoadInNewWindowRequest += this.NewWebBrowserWindowOpenRequestHandler;
 			this.actionSource.ShouldLoadInNewWindowRequest += this.ShouldLoadInNewWindowRequestHandler;
+			this.actionSource.DidCloseExternalWebViewWindow += this.DidCloseExternalWebViewWindowHandler;
 		}
 
         public void SetCookie(string host, string name, string value)
@@ -307,6 +309,7 @@ namespace HybridWebControl
 			this.actionSource.PageLoadError -= this.PageLoadErrorHandler;
 			this.actionSource.PageLoadInNewWindowRequest -= this.NewWebBrowserWindowOpenRequestHandler;
             this.actionSource.ShouldLoadInNewWindowRequest -= this.ShouldLoadInNewWindowRequestHandler;
+            this.actionSource.DidCloseExternalWebViewWindow -= this.DidCloseExternalWebViewWindowHandler;
 		}
 
 		private bool PageLoadRequestHandler(Uri uri)
@@ -369,6 +372,14 @@ namespace HybridWebControl
             }
 
             return true;
+        }
+
+        private void DidCloseExternalWebViewWindowHandler()
+        {
+            if (DidCloseExternalWebViewWindow != null)
+            {
+                DidCloseExternalWebViewWindow();
+            }
         }
 	}
 }

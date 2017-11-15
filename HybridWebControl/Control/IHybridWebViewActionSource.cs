@@ -38,6 +38,7 @@ namespace HybridWebControl
 		event Action<string> JavascriptExecuted;
 		event Action<Uri> PageLoadInNewWindowRequest;
 		event Func<Uri, bool> ShouldLoadInNewWindowRequest;
+        event Action DidCloseExternalWebViewWindow;
 
 		void GoBack();
 		void GoForward();

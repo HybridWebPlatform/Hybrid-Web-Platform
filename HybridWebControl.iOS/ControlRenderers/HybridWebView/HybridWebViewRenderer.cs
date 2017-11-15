@@ -26,6 +26,7 @@ namespace HybridWebControl.iOS
 		public event Action<string> JavascriptExecuted;
 		public event Action<Uri> PageLoadInNewWindowRequest;
 		public event Func<Uri, bool> ShouldLoadInNewWindowRequest;
+        public event Action DidCloseExternalWebViewWindow;
 
 		private WKUserContentController userController;
 
@@ -205,6 +206,7 @@ namespace HybridWebControl.iOS
 			var uiDelegate = new WebPlatformUIDelegate();
 
             uiDelegate.ShouldOpenExternalWindow += UIDelegate_ShouldOpenExternalWindow;
+            uiDelegate.DidCloseExternalWindow += UIDelegate_DidCloseExternalWindow;
 
 			return uiDelegate;
 		}
@@ -263,6 +265,15 @@ namespace HybridWebControl.iOS
 			}
 
             return true;
+		}
+
+		private void UIDelegate_DidCloseExternalWindow()
+		{
+			UIApplication.SharedApplication.NetworkActivityIndicatorVisible = false;
+            if (DidCloseExternalWebViewWindow != null)
+            {
+                DidCloseExternalWebViewWindow();
+            }
 		}
     }
 }
