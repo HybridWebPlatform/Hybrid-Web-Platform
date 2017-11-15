@@ -37,6 +37,7 @@ namespace HybridWebControl
 		event Action<Uri, string, int> PageLoadError;
 		event Action<string> JavascriptExecuted;
 		event Action<Uri> PageLoadInNewWindowRequest;
+		event Func<Uri, bool> ShouldLoadInNewWindowRequest;
 
 		void GoBack();
 		void GoForward();

@@ -33,8 +33,9 @@ namespace HybridWebControl.Droid
 		public event Action<Uri, string, int> PageLoadError;
 		public event Action<string> JavascriptExecuted;
 		public event Action<Uri> PageLoadInNewWindowRequest;
+		public event Func<Uri, bool> ShouldLoadInNewWindowRequest;
 
-        private WebPlatformViewClient viewClient;
+		private WebPlatformViewClient viewClient;
 		private const string NativeFuncCall = "Xamarin.call";
 		private const string NativeFunction = "function Native(action, data){Xamarin.call(JSON.stringify({ a: action, d: data }));}";
 
@@ -242,6 +243,16 @@ namespace HybridWebControl.Droid
 			{
 				PageLoadInNewWindowRequest(obj);
 			}
+		}
+
+		private bool ShouldLoadUrlInExternalWindow(Uri obj)
+		{
+			if (ShouldLoadInNewWindowRequest != null)
+			{
+				return ShouldLoadInNewWindowRequest(obj);
+			}
+
+            return true;
 		}
 
 		private void WebClient_ReceivedError(string arg1, string arg2, int arg3)

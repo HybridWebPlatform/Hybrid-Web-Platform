@@ -25,6 +25,7 @@ namespace HybridWebControl.iOS
 		public event Action<Uri, string, int> PageLoadError;
 		public event Action<string> JavascriptExecuted;
 		public event Action<Uri> PageLoadInNewWindowRequest;
+		public event Func<Uri, bool> ShouldLoadInNewWindowRequest;
 
 		private WKUserContentController userController;
 
@@ -203,7 +204,7 @@ namespace HybridWebControl.iOS
 		{
 			var uiDelegate = new WebPlatformUIDelegate();
 
-            uiDelegate.OpenExternalWindow += NavigationDelegate_OpenExternalWindow;
+            uiDelegate.ShouldOpenExternalWindow += UIDelegate_ShouldOpenExternalWindow;
 
 			return uiDelegate;
 		}
@@ -251,6 +252,17 @@ namespace HybridWebControl.iOS
 			{
 				this.PageLoadInNewWindowRequest(url);
 			}
+		}
+
+		private bool UIDelegate_ShouldOpenExternalWindow(Uri url)
+		{
+			UIApplication.SharedApplication.NetworkActivityIndicatorVisible = false;
+            if (ShouldLoadInNewWindowRequest != null)
+			{
+				return this.ShouldLoadInNewWindowRequest(url);
+			}
+
+            return true;
 		}
     }
 }

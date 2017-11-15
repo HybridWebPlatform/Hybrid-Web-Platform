@@ -7,19 +7,31 @@ namespace HybridWebPlatform.iOS
 {
     public class WebPlatformUIDelegate : WKUIDelegate
     {
-        public Action<Uri> OpenExternalWindow;
+        public Func<Uri, bool> ShouldOpenExternalWindow;
 
         public override WKWebView CreateWebView(WKWebView webView, WKWebViewConfiguration configuration, WKNavigationAction navigationAction, WKWindowFeatures windowFeatures)
         {
+			var newWebView = new WKWebView(new CoreGraphics.CGRect(0, 0, 0, 0), configuration);
+
             if (navigationAction.TargetFrame == null)
             {
-                if (OpenExternalWindow != null)
+                if (ShouldOpenExternalWindow != null)
                 {
-                    OpenExternalWindow(new Uri(navigationAction.Request.Url.AbsoluteString));
+                    if (ShouldOpenExternalWindow(new Uri(navigationAction.Request.Url.AbsoluteString)))
+                    {
+                        newWebView = new WKWebView(webView.Frame, configuration);
+                        newWebView.UIDelegate = this;
+                        webView.AddSubview(newWebView);
+                    }
                 }
             }
 
-            return new WKWebView(new CoreGraphics.CGRect(0, 0, 0, 0), configuration);
+            return newWebView;
+        }
+
+        public override void DidClose(WKWebView webView)
+        {
+            webView.RemoveFromSuperview();
         }
 
 #region Handling JavaScript alerts

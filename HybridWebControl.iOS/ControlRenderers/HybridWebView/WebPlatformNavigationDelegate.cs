@@ -11,7 +11,7 @@ namespace HybridWebPlatform.iOS
 		public event Action<string> StartLoadingUrl;
 		public event Action<string> FinishedLoadingUrl;
 		public event Func<string, bool> ShouldStartPageLoading;
-		public event Action<Uri> OpenExternalWindow;
+        public event Action<Uri> OpenExternalWindow;
 
 		public WebPlatformNavigationDelegate()
 		{
