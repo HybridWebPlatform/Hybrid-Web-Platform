@@ -19,7 +19,7 @@ namespace HybridWebPlatform.iOS
                 {
                     if (ShouldOpenExternalWindow(new Uri(navigationAction.Request.Url.AbsoluteString)))
                     {
-                        newWebView = new WKWebView(webView.Frame, configuration);
+                        newWebView = new WKWebView(webView.Bounds, configuration);
                         newWebView.UIDelegate = this;
                         webView.AddSubview(newWebView);
                     }
