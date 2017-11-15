@@ -34,8 +34,9 @@ namespace HybridWebControl.Droid
 		public event Action<string> JavascriptExecuted;
 		public event Action<Uri> PageLoadInNewWindowRequest;
 		public event Func<Uri, bool> ShouldLoadInNewWindowRequest;
+        public event Action DidCloseExternalWebViewWindow;
 
-		private WebPlatformViewClient viewClient;
+        private WebPlatformViewClient viewClient;
 		private const string NativeFuncCall = "Xamarin.call";
 		private const string NativeFunction = "function Native(action, data){Xamarin.call(JSON.stringify({ a: action, d: data }));}";
 
