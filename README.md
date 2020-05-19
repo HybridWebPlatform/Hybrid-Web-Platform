@@ -1,3 +1,7 @@
+## Warning!
+
+The project doesn't maintain anymore.
+
 ## Abstract
 Full-fledged WebView as Xamarin.Forms plugin (XLabs based) with cross-platform C# to JavaScript and JavaScript to C# calls support. Built for painless hybrid apps creation.
 
